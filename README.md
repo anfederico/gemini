@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/anfederico/Flaskex/master/media/gemini-logo.png" width="128px"><p>
+<p align="center"><img src="https://raw.githubusercontent.com/Crypto-AI/Gemini/master/media/gemini-logo.png" width="100px"><p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
