@@ -60,10 +60,40 @@ In addition to loading the data, you must define the strategy you want to test. 
 
 
 ```python
-def Logic()
+import helpers
+
+def Logic(Account, Lookback):
+    try:
+        # Process dataframe to collect signals
+        Lookback = helpers.getSignals(Lookback)
+        
+        # Load into period class to simplify indexing
+        Lookback = helpers.Period(Lookback)
+        
+        Today = Lookback.loc(0) # Current candle
+        Yesterday = Lookback.loc(0) # Previous candle
+        
+        if Today['signal'] == "down"
+            if Yesterday['signal'] == "down"
+                ExitPrice = Today['close']
+                for Position in Account.Positions:  
+                    if Position.Type == 'Long':
+                        Account.ClosePosition(Position, 0.5, ExitPrice)
+
+        if Today['signal'] == "up"
+            if Yesterday['signal'] == "up"
+                Risk          = 0.03
+                EntryPrice    = Today['close']
+                AccountValue  = Account.TotalValue(EntryPrice)
+                EntryCapital  = AccountValue*Risk
+                if EntryCapital >= 0:
+                    Account.EnterPosition('Long', EntryCapital, EntryPrice)
+     
+    except ValueError: 
+        pass # Handles lookback errors in beginning of dataset
 
 
-# Start backtesting with 1000 (BTC) intital capital
+# Start backtesting custom logic with 1000 (BTC) intital capital
 r.Start(1000, Logic)
 ```
 
