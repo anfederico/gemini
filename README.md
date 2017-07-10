@@ -56,16 +56,15 @@ r = gemini.Run(data)
 # Start backtesting with 100 (BTC) intital capital
 # You'll need to define a logic function first (next topic)
 r.Start(100, Logic)
-
+```
 
 #### Analyzing your Strategy
 After the backtest, you can analyze your strategy by printing the results to console. As of now, these include simple statistics of your ran but we plan to implement more complicated metrics for an stronger understanding of performance.
+
 ```python
 r.Results()
 ```
 ```text
--------------- Results ----------------
-
 Buy and Hold : -3.03%
 Net Profit   : -30.26
 Strategy     : 40.0%
@@ -76,8 +75,6 @@ Shorts       : 42
 Covers       : 47
 --------------------
 Total Trades : 443
-
----------------------------------------
 ```
 
 #### Visualizing the Equity Curve
