@@ -59,7 +59,7 @@ r.Start(100, Logic)
 ```
 
 #### Analyzing your Strategy
-After the backtest, you can analyze your strategy by printing the results to console. As of now, these include simple statistics of your ran but we plan to implement more complicated metrics for an stronger understanding of performance.
+After the backtest, you can analyze your strategy by printing the results to console. As of now, these include simple statistics of your run but we plan to implement more complicated metrics for a stronger understanding of performance.
 
 ```python
 r.Results()
