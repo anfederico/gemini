@@ -18,7 +18,7 @@ The run class is the meat and bones of the backtester. It starts off with a fres
 
 ## Examples
 
-#### Input Data (Pandas Dataframe)
+#### Input Data (Optional)
 If you have your own data that has/hasn't been processed, you should conform to the following structure. Basically, load your data into a Pandas dataframe object and be sure to convert the dates to datetime format and include the following lowercase column titles.
 ```text
                   date         high          low         open        close
@@ -32,8 +32,9 @@ If you have your own data that has/hasn't been processed, you should conform to 
 7  2017-07-08 14:30:00  2521.500036  2510.000000  2520.775500  2518.450645
 8  2017-07-08 15:00:00  2519.817394  2506.054360  2518.451000  2514.484009
 ```
-#### Optional Setup
-If you don't have your own data, we've included a useful function for grabbing historical charting data from the Poloniex exchange. In this example, we'll trade the BTC/ETH pair on a 30 minute timeframe. For demonstration purposes, we want to ignore the last 30 days of data in our backtest and look at the 2 months before then. With the poloniex helper function, it's easy to do that.
+
+#### Loading Data into the Backtester
+If you don't have your own data, we've included a useful function for grabbing historical charting data from the Poloniex exchange. In this example, we'll trade the BTC/ETH pair on a 30 minute timeframe. To demonstrate the versatility of our data grabber, we will ignore the last 30 days of data in our backtest and look at the 60 days before then. With the poloniex helper function, it's easy to do that.
 ```python
 import pandas as pd
 import poloniex as px
@@ -46,16 +47,24 @@ daysData = 60       # From there collect 60 days of data
 # Request data from Poloniex
 data = px.getPast(pair, period, daysBack, daysData)
 
-# Convert to dataframe with datetime format
+# Convert to Pandas dataframe with datetime format
 data = pd.DataFrame(data)
 data['date'] = pd.to_datetime(data['date'], unit='s')
 
 # Load the data into a backtesting class called Run
 r = gemini.Run(data)
+```
 
-# Start backtesting with 100 (BTC) intital capital
-# You'll need to define a logic function first (next topic)
-r.Start(100, Logic)
+#### Creating your Strategy
+In addition to loading the data, you must define the strategy you want to test. To do this, we'll create a logic function that can be passed to the backtester when you start.
+
+
+```python
+def Logic()
+
+
+# Start backtesting with 1000 (BTC) intital capital
+r.Start(1000, Logic)
 ```
 
 #### Analyzing your Strategy
