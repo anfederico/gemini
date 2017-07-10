@@ -62,9 +62,13 @@ r.Start(100, Logic)
 
 # Show results
 r.Results()
-
-# Visualize results
-r.Chart(ShowTrades=True)
-
 ```
+
+#### Visualizing Equity Curve
+You can visualize the performance of your strategy by comparing the equity curve with a buy and hold baseline. The equity curve simply tracks your account value throughout the backtest and will optionally show where your algorithm made its trades including longs, sells, shorts, and covers.
+```python
+r.Chart(ShowTrades=False)
+```
+<p align="center"><img src="https://raw.githubusercontent.com/Crypto-AI/Gemini/master/media/example.png"><p>
+
 
