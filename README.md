@@ -73,15 +73,15 @@ def Logic(Account, Lookback):
         Today = Lookback.loc(0) # Current candle
         Yesterday = Lookback.loc(-1) # Previous candle
         
-        if Today['signal'] == "down"
-            if Yesterday['signal'] == "down"
+        if Today['signal'] == "down":
+            if Yesterday['signal'] == "down":
                 ExitPrice = Today['close']
                 for Position in Account.Positions:  
                     if Position.Type == 'Long':
                         Account.ClosePosition(Position, 0.5, ExitPrice)
 
-        if Today['signal'] == "up"
-            if Yesterday['signal'] == "up"
+        if Today['signal'] == "up":
+            if Yesterday['signal'] == "up":
                 Risk          = 0.03
                 EntryPrice    = Today['close']
                 AccountValue  = Account.TotalValue(EntryPrice)
