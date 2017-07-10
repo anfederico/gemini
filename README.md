@@ -16,9 +16,6 @@ The account class represents (as you probably guessed) an account on an arbitrar
 ## Run Class
 The run class is the meat and bones of the backtester. It starts off with a fresh account class, a dataset (preprocessed with your signals), and some logic as to how the account class should behave. You'll set a lookback period and the run class will iterate through the dataset and apply the custom logic on the lookback period. At the end of the dataset, you can graph the equity curve along with indicators of where positions were opened and closed.
 
-## Contributing
-Please take a look at our [contributing](https://github.com/Crypto-AI/Gemini/blob/master/CONTRIBUTING.md) guidelines if you're interested in helping!
-
 ## Examples
 
 #### Input Data (Pandas Dataframe)
@@ -36,7 +33,7 @@ If you have your own data that has/hasn't been processed, you should conform to 
 8  2017-07-08 15:00:00  2519.817394  2506.054360  2518.451000  2514.484009
 ```
 #### Optional Setup
-If you don't have your own data, we've included a useful function for grabbing historical charting data from the Poloniex exchange. In this example, we'll trade the BTC/ETH pair on a 30 minute timeframe. For demonstration purposes, we want to ignore the last 30 days of data in our backtest and look at the 3 months before then. With the poloniex helper function, it's easy to do that.
+If you don't have your own data, we've included a useful function for grabbing historical charting data from the Poloniex exchange. In this example, we'll trade the BTC/ETH pair on a 30 minute timeframe. For demonstration purposes, we want to ignore the last 30 days of data in our backtest and look at the 2 months before then. With the poloniex helper function, it's easy to do that.
 ```python
 import pandas as pd
 import poloniex as px
@@ -44,7 +41,7 @@ import poloniex as px
 pair = "BTC_ETH"    # Use ETH pricing data on the BTC market
 period = 1800       # Use 1800 second candles
 daysBack = 30       # Grab data starting 30 days ago
-daysData = 90       # From there collect 90 days of data
+daysData = 60       # From there collect 60 days of data
 
 # Request data from Poloniex
 data = px.getPast(pair, period, daysBack, daysData)
@@ -60,15 +57,35 @@ r = gemini.Run(data)
 # You'll need to define a logic function first (next topic)
 r.Start(100, Logic)
 
-# Show results
+
+#### Analyzing your Strategy
+After the backtest, you can analyze your strategy by printing the results to console. As of now, these include simple statistics of your ran but we plan to implement more complicated metrics for an stronger understanding of performance.
+```python
 r.Results()
 ```
+```text
+-------------- Results ----------------
 
-#### Visualizing Equity Curve
+Buy and Hold : -3.03%
+Net Profit   : -30.26
+Strategy     : 40.0%
+Net Profit   : 400.01
+Longs        : 156
+Sells        : 198
+Shorts       : 42
+Covers       : 47
+--------------------
+Total Trades : 443
+
+---------------------------------------
+```
+
+#### Visualizing the Equity Curve
 You can visualize the performance of your strategy by comparing the equity curve with a buy and hold baseline. The equity curve simply tracks your account value throughout the backtest and will optionally show where your algorithm made its trades including longs, sells, shorts, and covers.
 ```python
 r.Chart(ShowTrades=False)
 ```
 <p align="center"><img src="https://raw.githubusercontent.com/Crypto-AI/Gemini/master/media/example.png"><p>
 
-
+## Contributing
+Please take a look at our [contributing](https://github.com/Crypto-AI/Gemini/blob/master/CONTRIBUTING.md) guidelines if you're interested in helping!
