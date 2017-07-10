@@ -56,7 +56,7 @@ r = gemini.Run(data)
 ```
 
 #### Creating your Strategy
-In addition to loading the data, you must define the strategy you want to test. To do this, we'll create a logic function that can be passed to the backtester when you start.
+In addition to loading the data, you must define the strategy you want to test. To do this, we'll create a logic function that can be passed to the backtester when you start. The backtester will proceed step-wise through the dataset, copying the current/past datapoints into a variable called "Lookback" to prevent lookahead bias. If the data hasn't already been processed, you may process it within the logic function (this make the simulation more accurate but significantly increases runtime). You can then use the helper class called "Period" to conveniently reference current and past datapoints. With those, you may execute long, sell, short, and cover positions directly on the "Account" class based on your strategy.
 
 
 ```python
@@ -71,7 +71,7 @@ def Logic(Account, Lookback):
         Lookback = helpers.Period(Lookback)
         
         Today = Lookback.loc(0) # Current candle
-        Yesterday = Lookback.loc(0) # Previous candle
+        Yesterday = Lookback.loc(-1) # Previous candle
         
         if Today['signal'] == "down"
             if Yesterday['signal'] == "down"
