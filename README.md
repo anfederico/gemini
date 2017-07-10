@@ -79,11 +79,11 @@ Net Profit   : -30.26
 Strategy     : 40.0%
 Net Profit   : 400.01
 Longs        : 156
-Sells        : 198
+Sells        : 137
 Shorts       : 0
 Covers       : 0
 --------------------
-Total Trades : 354
+Total Trades : 293
 ```
 
 #### Visualizing the Equity Curve
