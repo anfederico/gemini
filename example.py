@@ -1,55 +1,58 @@
 import pandas as pd
 import poloniex as px
+import pivots
 import gemini
 import helpers
+from datetime import datetime
 
 def Logic(Account, Lookback):
     try:
         # Process dataframe to collect signals
-        Lookback = helpers.getSignals(Lookback)
+        # Lookback = process(Lookback)
         
         # Load into period class to simplify indexing
         Lookback = helpers.Period(Lookback)
         
         Today = Lookback.loc(0) # Current candle
-        Yesterday = Lookback.loc(-1) # Previous candle
         
-        if Today['signal'] == "down":
-            if Yesterday['signal'] == "down":
+        if Today['date'] >= datetime.strptime('2017-05-01', '%Y-%m-%d'):
+            if Today['color'] == 'darkOrange':
                 ExitPrice = Today['close']
                 for Position in Account.Positions:  
                     if Position.Type == 'Long':
-                        Account.ClosePosition(Position, 0.5, ExitPrice)
+                        Account.ClosePosition(Position, 0.2, ExitPrice)
 
-        if Today['signal'] == "up":
-            if Yesterday['signal'] == "up":
-                Risk          = 0.03
-                EntryPrice    = Today['close']
-                AccountValue  = Account.TotalValue(EntryPrice)
-                EntryCapital  = AccountValue*Risk
-                if EntryCapital >= 0:
+        if Today['color'] == 'darkBlue':
+            Risk          = 0.03
+            EntryPrice    = Today['close']
+            AccountValue  = Account.TotalValue(EntryPrice)
+            EntryCapital  = AccountValue*Risk
+            if EntryCapital >= 0:
+                try: 
                     Account.EnterPosition('Long', EntryCapital, EntryPrice)
-     
-    except ValueError: 
-        pass # Handles lookback errors in beginning of dataset
+                except ValueError: 
+                    pass
+    except ValueError: pass
 
 
-pair = "BTC_ETH"    # Use ETH pricing data on the BTC market
-period = 1800       # Use 1800 second candles
-daysBack = 30       # Grab data starting 30 days ago
-daysData = 60       # From there collect 60 days of data
+# -----------------------------------------------
 
-# Request data from Poloniex
+# Collect data from Poloniex
+
+pair = "BTC_ETH"
+period = 1800 # 1800 sec candles (30 min timeframe)
+daysBack = 60 # Grab data starting 30 days ago
+daysData = 45 # From there collect 90 days of data
 data = px.getPast(pair, period, daysBack, daysData)
 
-# Convert to Pandas dataframe with datetime format
+# Convert to dataframe with dates
 data = pd.DataFrame(data)
+
 data['date'] = pd.to_datetime(data['date'], unit='s')
 
-# Load the data into a backtesting class called Run
-r = gemini.Run(data)
+data = pivots.getColors(data, 8)
 
-# Start backtesting custom logic with 1000 (BTC) intital capital
+r = gemini.Run(data)
 r.Start(1000, Logic)
 r.Results()
-r.Chart(ShowTrades=False)
+r.Chart()
