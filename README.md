@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/Crypto-AI/Gemini/master/media/logo.svg" width="100px"><p>
+<p align="center"><img src="https://github.com/Crypto-AI/Gemini/blob/master/media/logo.svg" width="100px"><p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -9,6 +9,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 <br><br>
+
+<p align="center"><img src="https://github.com/Crypto-AI/Gemini/blob/master/media/schematic.gif" width="550px"><p>
 
 
 ## Examples
