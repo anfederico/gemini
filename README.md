@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/Crypto-AI/Gemini/blob/master/media/logo.svg" width="100px"><p>
+<p align="center"><img src="https://github.com/Crypto-AI/Gemini/blob/master/media/logo.png" width="150px"><p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
