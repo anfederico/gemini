@@ -7,9 +7,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/Crypto-AI/Gemini.svg)](https://github.com/Crypto-AI/Gemini/issues)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-
-<br><br>
-
+<br>
 <p align="center"><img src="https://github.com/Crypto-AI/Gemini/blob/master/media/schematic.gif" width="550px"><p>
 
 
