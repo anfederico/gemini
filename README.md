@@ -51,7 +51,7 @@ r = gemini.Run(data)
 ```
 
 #### Creating your Strategy
-In addition to loading the data, you must define the strategy you want to test. To do this, we'll create a logic function that can be passed to the backtester when you start. The backtester will proceed step-wise through the dataset, copying the current/past datapoints into a variable called "Lookback" to prevent lookahead bias. If the data hasn't already been processed, you may process it within the logic function (this make the simulation more accurate but significantly increases runtime). You can then use the helper class called "Period" to conveniently reference current and past datapoints. With those, you may execute long, sell, short, and cover positions directly on the "Account" class based on your strategy.
+In addition to loading the data, you must define the strategy you want to test. To do this, we'll create a logic function that can be passed to the backtester when you start. The backtester will proceed step-wise through the dataset, copying the current/past datapoints into a variable called "Lookback" to prevent lookahead bias. If the data hasn't already been processed, you may process it within the logic function (this makes the simulation more accurate but significantly increases runtime). You can then use the helper class called "Period" to conveniently reference current and past datapoints. With those, you may execute long, sell, short, and cover positions directly on the "Account" class based on your strategy.
 
 
 ```python
@@ -77,10 +77,10 @@ def Logic(Account, Lookback):
 
         if Today['signal'] == "up":
             if Yesterday['signal'] == "up":
-                Risk          = 0.03
-                EntryPrice    = Today['close']
-                AccountValue  = Account.TotalValue(EntryPrice)
-                EntryCapital  = AccountValue*Risk
+                Risk         = 0.03
+                EntryPrice   = Today['close']
+                AccountValue = Account.TotalValue(EntryPrice)
+                EntryCapital = AccountValue*Risk
                 if EntryCapital >= 0:
                     Account.EnterPosition('Long', EntryCapital, EntryPrice)
      
