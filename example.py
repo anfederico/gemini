@@ -23,10 +23,10 @@ def Logic(Account, Lookback):
                         Account.ClosePosition(Position, 0.2, ExitPrice)
 
         if Today['color'] == 'darkBlue':
-            Risk          = 0.03
-            EntryPrice    = Today['close']
-            AccountValue  = Account.TotalValue(EntryPrice)
-            EntryCapital  = AccountValue*Risk
+            Risk         = 0.03
+            EntryPrice   = Today['close']
+            AccountValue = Account.TotalValue(EntryPrice)
+            EntryCapital = AccountValue*Risk
             if EntryCapital >= 0:
                 try: 
                     Account.EnterPosition('Long', EntryCapital, EntryPrice)
