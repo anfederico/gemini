@@ -79,8 +79,7 @@ def Logic(Account, Lookback):
             if Yesterday['signal'] == "up":
                 Risk         = 0.03
                 EntryPrice   = Today['close']
-                AccountValue = Account.TotalValue(EntryPrice)
-                EntryCapital = AccountValue*Risk
+                EntryCapital = Account.BuyingPower*Risk
                 if EntryCapital >= 0:
                     Account.EnterPosition('Long', EntryCapital, EntryPrice)
      
