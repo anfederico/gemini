@@ -6,7 +6,7 @@
 ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
 [![GitHub Issues](https://img.shields.io/github/issues/anfederico/Gemini.svg)](https://github.com/anfederico/Gemini/issues)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 <br>
 <p align="center"><img src="https://github.com/anfederico/Gemini/blob/master/media/schematic.gif" width="550px"><p>
 
