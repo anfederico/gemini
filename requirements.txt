@@ -1,0 +1,4 @@
+bokeh
+pandas
+requests
+matplotlib
