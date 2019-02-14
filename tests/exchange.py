@@ -1,10 +1,12 @@
-import exchange
+from context import gemini
+from gemini  import exchange
+
 import unittest
 
 class Methods(unittest.TestCase):
 
     def test_errors(self):
-        a = exchange.Account(1000)
+        a = gemini.exchange.Account(1000)
         self.assertRaises(ValueError, a.EnterPosition, 'Long',  2000, 10)
         self.assertRaises(ValueError, a.EnterPosition, 'Long',  -500, 10)       
         self.assertRaises(ValueError, a.EnterPosition, 'Long', 500, -10)
@@ -20,7 +22,7 @@ class Methods(unittest.TestCase):
         self.assertRaises(ValueError, a.ClosePosition, Short, -0.5, 20)
 
     def test_long(self):
-        a = exchange.Account(1000)
+        a = gemini.exchange.Account(1000)
         # Win on a long
         a.EnterPosition('Long', 500, 10)
         a.EnterPosition('Long', 500, 10)
@@ -44,7 +46,7 @@ class Methods(unittest.TestCase):
         self.assertEqual(a.TotalValue(25), 2125)
 
     def test_short(self):
-        a = exchange.Account(1000)
+        a = gemini.exchange.Account(1000)
         # Win on a short        
         a.EnterPosition('Short', 500, 10)
         a.EnterPosition('Short', 500, 10)
@@ -68,7 +70,7 @@ class Methods(unittest.TestCase):
         self.assertEqual(a.TotalValue(4), 587.5)
 
     def test_both(self):
-        a = exchange.Account(1000)
+        a = gemini.exchange.Account(1000)
         a.EnterPosition('Long',  200, 20)
         a.EnterPosition('Short', 250, 25)
         self.assertEqual(a.BuyingPower, 550)
@@ -86,13 +88,13 @@ class Methods(unittest.TestCase):
 
     def test_decimals(self):
         # Long with decimals
-        a = exchange.Account(2)
+        a = gemini.exchange.Account(2)
         a.EnterPosition('Long', 1, 0.00000001)
         self.assertEqual(a.TotalValue(0.00000002), 3)
         a.ClosePosition(a.Positions[0], 1, 0.00000002)
         self.assertEqual(a.BuyingPower, 3)
         # Short with decimals 
-        a = exchange.Account(2)
+        a = gemini.exchange.Account(2)
         a.EnterPosition('Short', 1, 0.00000002)
         self.assertEqual(a.TotalValue(0.00000001), 2.5)
         a.ClosePosition(a.Positions[0], 1, 0.00000001)
