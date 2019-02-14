@@ -28,6 +28,31 @@ If you have your own data that has/hasn't been processed, you should conform to 
 8  2017-07-08 15:00:00  2519.817394  2506.054360  2518.451000  2514.484009
 ```
 
+```
+ 4195.81 ┤                                                                                                 
+ 4161.76 ┤                                   ╭─╮                                                           
+ 4127.72 ┤                                   │ ╰╮                                                          
+ 4093.67 ┤                                   │  │                                                          
+ 4059.62 ┤                ╭╮                 │  ╰╮                                                         
+ 4025.58 ┤              ╭─╯╰╮╭╮              │   ╰─╮                                                       
+ 3991.53 ┤             ╭╯   ╰╯│        ╭╮╭╮  │     │                                                       
+ 3957.48 ┤             │      ╰╮      ╭╯╰╯│╭╮│     │                                                       
+ 3923.44 ┤             │       │      │   ╰╯╰╯     │                                                       
+ 3889.39 ┤             │       │   ╭╮╭╯            │                     ╭───╮                          ╭╮ 
+ 3855.34 ┤             │       │  ╭╯││             │                     │   ╰─╮                        │╰ 
+ 3821.30 ┤       ╭╮    │       ╰──╯ ╰╯             │     ╭╮   ╭╮        ╭╯     ╰╮  ╭╮ ╭╮          ╭─╮╭──╯  
+ 3787.25 ┤       ││    │                           │╭╮  ╭╯╰╮ ╭╯│        │       │  │╰─╯╰─╮        │ ╰╯     
+ 3753.21 ┤     ╭╮│╰─╮  │                           ││╰╮╭╯  ╰╮│ │╭──╮    │       │ ╭╯     ╰─╮      │        
+ 3719.16 ┤     │╰╯  │╭─╯                           ╰╯ ╰╯    ╰╯ ╰╯  │    │       ╰─╯        │  ╭─╮╭╯        
+ 3685.11 ┤    ╭╯    ╰╯                                             │    │                  ╰──╯ ╰╯         
+ 3651.07 ┤    │                                                    │   ╭╯                                  
+ 3617.02 ┤    │                                                    ╰╮╭─╯                                   
+ 3582.97 ┤    │                                                     ╰╯                                     
+ 3548.93 ┤╮  ╭╯                                                                                            
+ 3514.88 ┼╰╮╭╯                                                                                             
+ 3480.83 ┤ ╰╯                                                                                              
+```
+
 #### Loading Data into the Backtester
 If you don't have your own data, we've included a useful function for grabbing historical charting data from the Poloniex exchange. In this example, we'll trade the BTC/ETH pair on a 30 minute timeframe. To demonstrate the versatility of our data grabber, we will ignore the last 30 days of data in our backtest and look at the 60 days before then. With the poloniex helper function, it's easy to do that.
 ```python
