@@ -1,4 +1,5 @@
 bokeh
+numpy
 pandas
 requests
 matplotlib
