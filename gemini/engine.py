@@ -1,9 +1,10 @@
 import bokeh.plotting
 import pandas as pd
 import numpy as np
-import exchange
-import helpers
 import time
+
+# Local imorts
+from . import exchange, helpers
 
 class Run():
     def __init__(self, Data):

@@ -176,6 +176,8 @@ def get_ltf_candles(pair, tf, start, end):
     # Resample to higher time frame if necessary
     df = resample_data(df, tf_1, tf_2)
 
+    df = df.reset_index()
+
     return df
 
 def get_htf_candles(pair, exchange, tf, start, end):
@@ -219,5 +221,7 @@ def get_htf_candles(pair, exchange, tf, start, end):
 
     # Resample to higher time frame if necessary
     df = resample_data(df, tf_1, tf_2)
+
+    df = df.reset_index()
 
     return(df)
