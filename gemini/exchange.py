@@ -120,6 +120,7 @@ class account():
                                                    position.shares * percent, 
                                                    position.entry_price, 
                                                    current_price))
+            
             self.buying_power += position.close(percent, current_price)
 
     def purge_positions(self):
