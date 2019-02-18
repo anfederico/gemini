@@ -10,4 +10,4 @@ install:
   - pip3 install nose
 
 script:
-  - nosetests
+  - cd tests && nosetests
