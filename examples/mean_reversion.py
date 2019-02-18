@@ -68,6 +68,6 @@ df = bands(df)
 df = touches(df)
 
 # Backtest
-r = engine.run(df)
-r.start(1000, logic)
-r.results()
+backtest = engine.backtest(df)
+backtest.start(1000, logic)
+backtest.results()

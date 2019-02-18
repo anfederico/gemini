@@ -6,20 +6,29 @@ import time
 # Local imorts
 from . import exchange, helpers
 
-class run():
+class backtest():
     def __init__(self, data):
         self.data = data
 
     def start(self, initial_capital, logic):
         
+        self.tracker = []
         self.account = exchange.account(initial_capital)
 
         # Enter backtest ---------------------------------------------  
         for index, today in self.data.iterrows():
     
+            date = today['date']
+            equity = self.account.total_value(today['close'])
+
             # Update account variables
-            self.account.date = today['date']
-            self.account.equity.append(self.account.total_value(today['close']))
+            self.account.date = date
+            self.account.equity.append(equity)
+
+            # Equity tracking
+            self.tracker.append({'date': date, 
+                                 'benchmark_equity' : today['close'],
+                                 'strategy_equity' : equity})
 
             # Execute trading logic
             lookback = self.data[0:index+1]
@@ -28,6 +37,14 @@ class run():
             # Cleanup empty positions
             self.account.purge_positions()     
         # ------------------------------------------------------------
+
+        # For pyfolio
+        df = pd.DataFrame(self.tracker)
+        df['benchmark_return'] = (df.benchmark_equity-df.benchmark_equity.shift(1))/df.benchmark_equity.shift(1)
+        df['strategy_return'] = (df.strategy_equity-df.strategy_equity.shift(1))/df.strategy_equity.shift(1)
+        df.index = df['date']
+        del df['date']
+        return df
 
     def results(self):          
         print("-------------- Results ----------------\n")
