@@ -27,36 +27,36 @@ def touches(df):
 
 def logic(account, lookback):
     try:
-        lookback = helpers.Period(lookback)
+        lookback = helpers.period(lookback)
         today = lookback.loc(0)
         
         # Selling
         if today.touch_upper:
-            ExitPrice = today.upper
-            for Position in account.Positions:  
-                if Position.Type == 'Long':
-                    account.ClosePosition(Position, 1, ExitPrice)
+            exit_price = today.upper
+            for position in account.positions:  
+                if position.type == 'long':
+                    account.close_position(position, 1, exit_price)
 
         if today.crossing_up:
-            ExitPrice = today.close
-            for Position in account.Positions:  
-                if Position.Type == 'Long':
-                    account.ClosePosition(Position, 1, ExitPrice)
+            exit_price = today.close
+            for position in account.positions:  
+                if position.type == 'long':
+                    account.close_position(position, 1, exit_price)
                     
         # Buying
         if today.touch_lower | today.crossing_dn:
-            Risk         = 1
-            EntryPrice   = today.lower
-            EntryCapital = account.BuyingPower*Risk
-            if EntryCapital > 0:
-                account.EnterPosition('Long', EntryCapital, EntryPrice)
+            risk          = 1
+            entry_price   = today.lower
+            entry_capital = account.buying_power*risk
+            if entry_capital > 0:
+                account.enter_position('long', entry_capital, entry_price)
      
         if today.crossing_dn:
-            Risk         = 1
-            EntryPrice   = today.close
-            EntryCapital = account.BuyingPower*Risk
-            if EntryCapital > 0:
-                account.EnterPosition('Long', EntryCapital, EntryPrice)    
+            risk          = 1
+            entry_price   = today.close
+            entry_capital = account.buying_power*risk
+            if entry_capital > 0:
+                account.enter_position('long', entry_capital, entry_price)    
     
     except Exception as e:
         print(e)
@@ -68,6 +68,6 @@ df = bands(df)
 df = touches(df)
 
 # Backtest
-r = engine.Run(df)
-r.Start(1000, logic)
-r.Results()
+r = engine.run(df)
+r.start(1000, logic)
+r.results()
