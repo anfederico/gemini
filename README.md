@@ -3,6 +3,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/python-v3.6-blue.svg)
+[![Build Status](https://travis-ci.org/anfederico/Gemini.svg?branch=master)](https://travis-ci.org/anfederico/Gemini)
 ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
 [![GitHub Issues](https://img.shields.io/github/issues/anfederico/Gemini.svg)](https://github.com/anfederico/Gemini/issues)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
