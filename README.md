@@ -139,6 +139,3 @@ r.chart()
 
 #### Real Example
 Please take a look at our real example of a [mean reversion strategy](https://github.com/anfederico/Gemini/blob/master/examples/mean_reversion.ipynb)
-
-## Contributing
-Please take a look at our [contributing](https://github.com/anfederico/Gemini/blob/master/CONTRIBUTING.md) guidelines if you're interested in helping!
