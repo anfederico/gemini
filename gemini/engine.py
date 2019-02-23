@@ -72,9 +72,9 @@ class backtest():
         print("Total Trades : {0}".format(longs + sells + shorts + covers))
         print("\n---------------------------------------")
     
-    def chart(self, show_trades=False):
-        bokeh.plotting.output_file("chart.html", title="Equity Curve")
-        p = bokeh.plotting.figure(x_axis_type="datetime", plot_width=1000, plot_height=400, title="Equity Curve")
+    def chart(self, show_trades=False, title="Equity Curve"):
+        bokeh.plotting.output_file("chart.html", title=title)
+        p = bokeh.plotting.figure(x_axis_type="datetime", plot_width=1000, plot_height=400, title=title)
         p.grid.grid_line_alpha = 0.3
         p.xaxis.axis_label = 'Date'
         p.yaxis.axis_label = 'Equity'
