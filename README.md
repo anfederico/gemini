@@ -95,7 +95,7 @@ def logic(account, lookback):
             if yesterday['signal'] == "down":
                 exit_price = today['close']
                 for position in acount.positions:  
-                    if position.Type == 'Long':
+                    if position.type == 'long':
                         account.close_position(position, 0.5, exit_price)
 
         if today['signal'] == "up":
@@ -104,11 +104,10 @@ def logic(account, lookback):
                 entry_price   = today['close']
                 entry_capital = account.buying_power*risk
                 if entry_capital >= 0:
-                    account.enter_position('Long', entry_capital, entry_price)
+                    account.enter_position('long', entry_capital, entry_price)
      
     except ValueError: 
         pass # Handles lookback errors in beginning of dataset
-
 
 # Start backtesting custom logic with 1000 (BTC) intital capital
 r.start(1000, logic)
