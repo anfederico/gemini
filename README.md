@@ -59,10 +59,10 @@ If you don't have your own data, we've included useful functions for grabbing lo
 ```python
 
 # Higher timeframes (>= daily)
-df = data.get_htf_candles("BTC_USD", "Bitfinex", "2-DAY", "2019-01-12 12:00:00", "2019-02-01 00:00:00")
+df = data.get_htf_candles("BTC_USD", "Bitfinex", "3-DAY", "2019-01-12 00:00:00", "2019-02-01 00:00:00")
 
 # Lower timeframes (< daily)
-df = data.get_ltf_candles("USDC_BTC", "8-HOUR", "2019-01-12 12:00:00", "2019-02-01 00:00:00")
+df = data.get_ltf_candles("USDC_BTC", "30-MIN", "2019-01-12 00:00:00", "2019-02-01 00:00:00")
 
 # Load the data into a backtesting class called Run
 r = gemini.run(df)
