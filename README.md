@@ -55,25 +55,17 @@ If you have your own data that has/hasn't been processed, you should conform to 
 ```
 
 #### Loading Data into the Backtester
-If you don't have your own data, we've included a useful function for grabbing historical charting data from the Poloniex exchange. In this example, we'll trade the BTC/ETH pair on a 30 minute timeframe. To demonstrate the versatility of our data grabber, we will ignore the last 30 days of data in our backtest and look at the 60 days before then. With the poloniex helper function, it's easy to do that.
+If you don't have your own data, we've included useful functions for grabbing low and high timeframe historical data from crypto exchanges. These helper functions will automatically resample your datasets to any desired timeframe and return a Gemini-compatible dataframe.
 ```python
-import pandas as pd
-import poloniex as px
 
-pair = "BTC_ETH"    # Use ETH pricing data on the BTC market
-period = 1800       # Use 1800 second candles
-daysBack = 30       # Grab data starting 30 days ago
-daysData = 60       # From there collect 60 days of data
+# Higher timeframes (>= daily)
+df = data.get_htf_candles("BTC_USD", "Bitfinex", "2-DAY", "2019-01-12 12:00:00", "2019-02-01 00:00:00")
 
-# Request data from Poloniex
-data = px.getPast(pair, period, daysBack, daysData)
-
-# Convert to Pandas dataframe with datetime format
-data = pd.DataFrame(data)
-data['date'] = pd.to_datetime(data['date'], unit='s')
+# Lower timeframes (< daily)
+df = data.get_ltf_candles("USDC_BTC", "8-HOUR", "2019-01-12 12:00:00", "2019-02-01 00:00:00")
 
 # Load the data into a backtesting class called Run
-r = gemini.Run(data)
+r = gemini.run(df)
 ```
 
 #### Creating your Strategy
@@ -83,46 +75,47 @@ In addition to loading the data, you must define the strategy you want to test. 
 ```python
 import helpers
 
-def Logic(Account, Lookback):
+def logic(account, lookback):
     try:
         # Process dataframe to collect signals
-        Lookback = helpers.getSignals(Lookback)
+        lookback = helpers.get_signals(lookback)
         
         # Load into period class to simplify indexing
-        Lookback = helpers.Period(Lookback)
+        lookback = helpers.period(lookback)
         
-        Today = Lookback.loc(0) # Current candle
-        Yesterday = Lookback.loc(-1) # Previous candle
+        today = lookback.loc(0) # Current candle
+        yesterday = lookback.loc(-1) # Previous candle
         
-        if Today['signal'] == "down":
-            if Yesterday['signal'] == "down":
-                ExitPrice = Today['close']
-                for Position in Account.Positions:  
-                    if Position.Type == 'Long':
-                        Account.ClosePosition(Position, 0.5, ExitPrice)
+        if today['signal'] == "down":
+            if yesterday['signal'] == "down":
+                exit_price = today['close']
+                for position in acount.positions:  
+                    if position.Type == 'Long':
+                        account.close_position(position, 0.5, exit_price)
 
-        if Today['signal'] == "up":
-            if Yesterday['signal'] == "up":
-                Risk         = 0.03
-                EntryPrice   = Today['close']
-                EntryCapital = Account.BuyingPower*Risk
-                if EntryCapital >= 0:
-                    Account.EnterPosition('Long', EntryCapital, EntryPrice)
+        if today['signal'] == "up":
+            if yesterday['signal'] == "up":
+                risk          = 0.03
+                entry_price   = today['close']
+                entry_capital = account.buying_power*risk
+                if entry_capital >= 0:
+                    account.enter_position('Long', entry_capital, entry_price)
      
     except ValueError: 
         pass # Handles lookback errors in beginning of dataset
 
 
 # Start backtesting custom logic with 1000 (BTC) intital capital
-r.Start(1000, Logic)
+r.start(1000, logic)
 ```
 
 #### Analyzing your Strategy
 After the backtest, you can analyze your strategy by printing the results to console. As of now, these include simple statistics of your run but we plan to implement more complicated metrics for a stronger understanding of performance.
 
 ```python
-r.Results()
+r.results()
 ```
+
 ```text
 Buy and Hold : -3.03%
 Net Profit   : -30.26
@@ -139,9 +132,13 @@ Total Trades : 293
 #### Visualizing the Equity Curve
 You can visualize the performance of your strategy by comparing the equity curve with a buy and hold baseline. The equity curve simply tracks your account value throughout the backtest and will optionally show where your algorithm made its trades including longs, sells, shorts, and covers.
 ```python
-r.Chart(ShowTrades=False)
+r.chart()
 ```
-<p align="center"><img src="https://raw.githubusercontent.com/Crypto-AI/Gemini/master/media/example.png"><p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/anfederico/Gemini/master/media/example.png"><p>
+
+#### Real Example
+Please take a look at our real example of a [mean reversion strategy](https://github.com/anfederico/Gemini/blob/master/examples/mean_reversion.ipynb)
 
 ## Contributing
-Please take a look at our [contributing](https://github.com/Crypto-AI/Gemini/blob/master/CONTRIBUTING.md) guidelines if you're interested in helping!
+Please take a look at our [contributing](https://github.com/anfederico/Gemini/blob/master/CONTRIBUTING.md) guidelines if you're interested in helping!
