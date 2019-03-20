@@ -9,6 +9,18 @@ from . import ptable
 tf_mapper = {'MIN':'T','HOUR':'H','DAY':'D','WEEK':'W','MONTH':'M'}
 
 def resample_data(df, integer, htf):
+    """Resample dataframe to a higher timeframe.
+
+    :param df: An HLOCV pandas dataframe with a datetime index
+    :type df: pandas.DataFrame
+    :param integer: The frequency of the higher timeframe
+    :type integer: int
+    :param htf: The period of the higher timeframe (e.g. 'MIN', 'HOUR', 'DAY', 'WEEK', "MONTH")
+    :type htf: str
+
+    :return: A resampled pandas dataframe
+    :rtype: pandas.DataFrame
+    """
     htf = str(integer)+tf_mapper[htf]
     df['low']    = df.low.resample(htf).min()
     df['high']   = df.high.resample(htf).max()
@@ -18,9 +30,24 @@ def resample_data(df, integer, htf):
     return df.dropna()
 
 def available_units():
+    """Get available periods for resampling to higher timeframes.
+
+    :return: A list of available time frames
+    :rtype: list
+    """
     return tf_mapper.keys()
 
 def tf_to_secs(freq, unit):
+    """Convert a timeframe into its equivalent in seconds.
+
+    :param freq: The frequency of the timeframe
+    :type freq: int
+    :param unit: The period of the timeframe (e.g. 'MIN', 'HOUR', 'DAY', 'WEEK', "MONTH")
+    :type unit: str
+
+    :return: A timeframe represented as seconds
+    :rtype: int
+    """
     multiplier = {'MIN'  : 60,
                   'HOUR' : 3600,
                   'DAY'  : 86400,
@@ -29,6 +56,14 @@ def tf_to_secs(freq, unit):
     return freq*multiplier[unit]
 
 def px_available_pairs(show=False):
+    """Get available trading pairs for Poloniex Exchange.
+
+    :param show: Pretty print data
+    :type show: bool
+
+    :return: A list of trading pairs
+    :rtype: list
+    """
     url = "https://poloniex.com/public?command=returnTicker"
     response = requests.get(url)
     data = response.json()
@@ -39,11 +74,27 @@ def px_available_pairs(show=False):
     return(tickers)
 
 def px_available_tfs():
+    """Print available timeframes for Poloniex Exchange.
+    """
     print("Available timeframes take the form of 'FREQ-UNIT'")
     print("Any timeframe above 5-MIN is available")
     print("E.g. 5-MIN, 12-HOUR, 3-DAY, 1-WEEK, 1-MONTH")
 
 def px_request_data(pair, tf, start, end):
+    """Request historical data from Poloniex Exchange.
+
+    :param pair: Trading pair
+    :type pair: str
+    :param tf: Candle timeframe
+    :type tf: str
+    :param start: Date for beginning of data
+    :type start: datetime
+    :param end: Date for end of data
+    :type end: datetime
+
+    :return: A pandas dataframe of historical data
+    :rtype: pandas.DataFrame
+    """
     end = (end-dt.datetime(1970,1,1)).total_seconds()
     start = (start-dt.datetime(1970,1,1)).total_seconds()
 
@@ -60,11 +111,21 @@ def px_request_data(pair, tf, start, end):
     return df
 
 def cc_available_tfs():
+    """Print available timeframes for Cypto Compare.
+    """
     print("Available timeframes take the form of 'FREQ-UNIT'")
     print("Any timeframe above 1-DAY is available")
     print("E.g. 1-DAY, 3-WEEK, 1-MONTH")
 
 def cc_available_exchanges(show=False):
+    """Print available exchanges for Cypto Compare.
+
+    :param show: Pretty print data
+    :type show: bool
+
+    :return: A list of trading pairs
+    :rtype: list
+    """
     url = "https://min-api.cryptocompare.com/data/v2/all/exchanges"
     response = requests.get(url)
     data = response.json()
@@ -90,6 +151,16 @@ def cc_available_exchanges(show=False):
         return(exchanges)
 
 def cc_available_pairs(exchange, show=False):
+    """Print available trading pairs for Cypto Compare.
+
+    :param exchange: The exchange to get data for
+    :type exchange: str
+    :param show: Pretty print data
+    :type show: bool
+
+    :return: A list of trading pairs
+    :rtype: list
+    """
     url = "https://min-api.cryptocompare.com/data/v2/all/exchanges"
     response = requests.get(url)
     data = response.json()
@@ -114,6 +185,20 @@ def cc_available_pairs(exchange, show=False):
         return pairs
 
 def cc_request_data(pair, exchange, start, end): 
+    """Request historical data from Crypto Compare.
+
+    :param pair: Trading pair
+    :type pair: str
+    :param exchange: The exchange to get data for
+    :type exchange: str
+    :param start: Date for beginning of data
+    :type start: datetime
+    :param end: Date for end of data
+    :type end: datetime
+
+    :return: A pandas dataframe of historical data
+    :rtype: pandas.DataFrame
+    """
     params = {'fsym': pair.split("_")[0],
               'tsym': pair.split("_")[1],
               'toTs': (end-dt.datetime(1970,1,1)).total_seconds(),
@@ -135,7 +220,20 @@ def cc_request_data(pair, exchange, start, end):
         raise ValueError(data["Message"])
 
 def get_ltf_candles(pair, tf, start, end):
+    """Request historical data on a timeframe less than daily.
 
+    :param pair: Trading pair
+    :type pair: str
+    :param tf: Candle timeframe
+    :type tf: str
+    :param start: Date for beginning of data
+    :type start: datetime
+    :param end: Date for end of data
+    :type end: datetime
+
+    :return: A pandas dataframe of historical data
+    :rtype: pandas.DataFrame
+    """
     # Handling of pair
     if pair not in px_available_pairs(show=False):
         px_available_pairs(show=True)
@@ -181,7 +279,22 @@ def get_ltf_candles(pair, tf, start, end):
     return df
 
 def get_htf_candles(pair, exchange, tf, start, end):
+    """Request historical data on a timeframe greater than or equal to daily.
 
+    :param pair: Trading pair
+    :type pair: str
+    :param exchange: The exchange to get data for
+    :type exchange: str
+    :param tf: Candle timeframe
+    :type tf: str
+    :param start: Date for beginning of data
+    :type start: datetime
+    :param end: Date for end of data
+    :type end: datetime
+
+    :return: A pandas dataframe of historical data
+    :rtype: pandas.DataFrame
+    """
     # Handling of exchange/pair
     if exchange not in cc_available_exchanges():
         cc_available_exchanges(show=True)

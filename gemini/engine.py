@@ -7,11 +7,29 @@ import time
 from . import exchange, helpers
 
 class backtest():
+    """An object representing a backtesting simulation."""
     def __init__(self, data):
+        """Initate the backtest.
+
+        :param data: An HLOCV+ pandas dataframe with a datetime index
+        :type data: pandas.DataFrame
+
+        :return: A bactesting simulation
+        :rtype: backtest
+        """  
         self.data = data
 
     def start(self, initial_capital, logic):
-        
+        """Start backtest.
+
+        :param initial_capital: Starting capital to fund account
+        :type initial_capital: float
+        :param logic: A function that will be applied to each lookback period of the data
+        :type logic: function
+
+        :return: A bactesting simulation
+        :rtype: backtest
+        """         
         self.tracker = []
         self.account = exchange.account(initial_capital)
 
@@ -46,7 +64,8 @@ class backtest():
         del df['date']
         return df
 
-    def results(self):          
+    def results(self):   
+        """Print results"""           
         print("-------------- Results ----------------\n")
         being_price = self.data.iloc[0]['open']
         final_price = self.data.iloc[-1]['close']
@@ -73,6 +92,13 @@ class backtest():
         print("\n---------------------------------------")
     
     def chart(self, show_trades=False, title="Equity Curve"):
+        """Chart results.
+
+        :param show_trades: Show trades on plot
+        :type show_trades: bool
+        :param title: Plot title
+        :type title: str
+        """     
         bokeh.plotting.output_file("chart.html", title=title)
         p = bokeh.plotting.figure(x_axis_type="datetime", plot_width=1000, plot_height=400, title=title)
         p.grid.grid_line_alpha = 0.3
