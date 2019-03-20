@@ -38,7 +38,7 @@ release = u'1.0.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinxcontrib.apidoc',
+    #'sphinxcontrib.apidoc',
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
     'sphinx.ext.napoleon',
@@ -48,9 +48,9 @@ napoleon_google_docstring = False
 napoleon_use_param = False
 napoleon_use_ivar = True
 
-apidoc_module_dir = '../gemini'
-apidoc_output_dir = 'reference'
-apidoc_separate_modules = True
+#apidoc_module_dir = '../gemini'
+#apidoc_output_dir = 'reference'
+#apidoc_separate_modules = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
