@@ -3,8 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Gemini's documentation!
-==================================
+.. image:: ../media/logo.png
+  :width: 100
+  :align: center
+
+Docs
+====
 
 .. toctree::
    :maxdepth: 4
