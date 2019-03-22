@@ -11,6 +11,16 @@
 <br>
 <p align="center"><img src="https://github.com/anfederico/Gemini/blob/master/media/schematic.gif" width="550px"><p>
 
+## Install
+
+```bash
+pip3 install git+git://github.com/anfederico/Gemini.git
+```
+
+## Load
+```python
+from gemini  import data, engine, helpers
+```
 
 ## Examples
 
@@ -70,7 +80,7 @@ df = data.get_ltf_candles("USDC_BTC", "30-MIN", "2019-01-12 00:00:00", "2019-02-
 ```python
 import engine
 
-r = engine.run(df)
+backtest = engine.backtest(df)
 ```
 
 #### Creating your Strategy
@@ -110,14 +120,14 @@ def logic(account, lookback):
         pass # Handles lookback errors in beginning of dataset
 
 # Start backtesting custom logic with 1000 (BTC) intital capital
-r.start(1000, logic)
+backtest.start(1000, logic)
 ```
 
 #### Analyzing your Strategy
 After the backtest, you can analyze your strategy by printing the results to console. As of now, these include simple statistics of your run but we plan to implement more complicated metrics for a stronger understanding of performance.
 
 ```python
-r.results()
+backtest.results()
 ```
 
 ```text
@@ -136,7 +146,7 @@ Total Trades : 293
 #### Visualizing the Equity Curve
 You can visualize the performance of your strategy by comparing the equity curve with a buy and hold baseline. The equity curve simply tracks your account value throughout the backtest and will optionally show where your algorithm made its trades including longs, sells, shorts, and covers.
 ```python
-r.chart()
+backtest.chart()
 ```
 
 <p align="center"><img src="https://raw.githubusercontent.com/anfederico/Gemini/master/media/example.png"><p>

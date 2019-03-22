@@ -9,7 +9,7 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='Gemini',
+    name='gemini',
     version='1.0.0',
     description='Backtesting for sleepless cryptocurrency markets',
     long_description=readme,
