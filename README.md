@@ -19,7 +19,7 @@ pip3 install git+git://github.com/anfederico/Gemini.git
 
 ## Load
 ```python
-from gemini  import data, engine, helpers
+from gemini import data, engine, helpers
 ```
 
 ## Examples
@@ -67,8 +67,6 @@ If you have your own data that has/hasn't been processed, you should conform to 
 #### Data Retrieval
 If you don't have your own data, we've included useful functions for grabbing low and high timeframe historical data from crypto exchanges. These helper functions will automatically resample your datasets to any desired timeframe and return a Gemini-compatible dataframe.
 ```python
-import data
-
 # Higher timeframes (>= daily)
 df = data.get_htf_candles("BTC_USD", "Bitfinex", "3-DAY", "2019-01-12 00:00:00", "2019-02-01 00:00:00")
 
@@ -78,8 +76,6 @@ df = data.get_ltf_candles("USDC_BTC", "30-MIN", "2019-01-12 00:00:00", "2019-02-
 
 #### Loading Data into the Backtester
 ```python
-import engine
-
 backtest = engine.backtest(df)
 ```
 
@@ -88,8 +84,6 @@ In addition to loading the data, you must define the strategy you want to test. 
 
 
 ```python
-import helpers
-
 def logic(account, lookback):
     try:
         # Process dataframe to collect signals
