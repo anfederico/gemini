@@ -1,13 +1,13 @@
 language: python
 python:
-  - "3.6"
+  - 3.7
 
-before_install: 
-  - pip3 install numpy
+services:
+  - docker
 
-install: 
-  - pip3 install -r requirements.txt
-  - pip3 install nose
+install:
+  - docker build -t anfederico/Gemini .
+  - docker run anfederico/Gemini /bin/sh -c "cd /root/Gemini
 
 script:
-  - cd tests && nosetests
+  - nosetests
