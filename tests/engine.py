@@ -4,6 +4,7 @@ from gemini  import engine, helpers
 import unittest
 
 # Global Imports
+import os
 import pandas as pd
 import numpy as np
 
@@ -66,16 +67,18 @@ def logic(account, lookback):
 class Methods(unittest.TestCase):
 
     def test_engine(self):
-        #df = pd.read_csv("../examples/data/BTC_USD.csv", header=0, index_col=0)
-        #df = bands(df)
-        #df = touches(df)
 
-        #backtest = engine.backtest(df)
-        #results = backtest.start(1000, logic)
+        path = os.path.dirname( __file__ ).rstrip("/tests")
+        data_path = os.path.join(path, 'examples/data/BTC_USD.csv')
 
-        #self.assertEqual(results.tail(1).values.tolist()[0], [9659.09950232, 6865.28571855189, -0.025089364796339712, 0.0])
+        df = pd.read_csv(data_path, header=0, index_col=0)
+        df = bands(df)
+        df = touches(df)
 
-        self.assertEqual(1, 1)
+        backtest = engine.backtest(df)
+        results = backtest.start(1000, logic)
+
+        self.assertEqual(results.tail(1).values.tolist()[0], [9659.09950232, 6865.28571855189, -0.025089364796339712, 0.0])
 
 if __name__ == '__main__':
     unittest.main()
