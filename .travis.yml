@@ -11,3 +11,6 @@ install:
 
 script:
   - nosetests tests/data.py
+  - nosetests tests/engine.py
+  - nosetests tests/exchange.py
+  - nosetests tests/helpers.py
