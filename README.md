@@ -24,6 +24,8 @@ from gemini import data, engine, helpers
 
 ## Examples
 
+*For more information, please refer to the [full documentation](https://gemini-docs.readthedocs.io/en/latest/)*
+
 #### Input Data (Optional)
 If you have your own data that has/hasn't been processed, you should conform to the following structure. Basically, load your data into a Pandas dataframe object and be sure to convert the dates to datetime format and include the following lowercase column titles.
 ```text
