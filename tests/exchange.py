@@ -102,10 +102,11 @@ class Methods(unittest.TestCase):
         self.assertEqual(a.buying_power, 2.5)
     
     def test_commision(self):
+        # ten percent commission
         a = gemini.exchange.account(1000)
-        a.enter_position('long',  220, 20, commission=0.1) #10% commision
+        a.enter_position('long',  220, 20, commission=0.1)
         a.enter_position('short', 330, 30, commission=0.1) 
-        self.assertEqual(a.buying_power, 450) #
+        self.assertEqual(a.buying_power, 450)
         self.assertEqual(a.total_value(25), 1050)
         long  = a.positions[0]
         short = a.positions[1]
@@ -113,7 +114,7 @@ class Methods(unittest.TestCase):
         a.close_position(short, 0.5, 30, commission=0.1)
         self.assertEqual(a.buying_power, 720) 
         self.assertEqual(a.total_value(25), 1020)
-        a.close_position(long,  1.0, 50, commission =0.1)
+        a.close_position(long,  1.0, 50, commission=0.1)
         a.close_position(short, 1.0, 30, commission=0.1)
         self.assertEqual(a.buying_power, 1080)
         self.assertEqual(a.total_value(100), 1080)

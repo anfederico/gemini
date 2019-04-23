@@ -188,7 +188,7 @@ class account():
         self.opened_trades   = []
         self.closed_trades   = []
 
-    def enter_position(self, type, entry_capital, entry_price, exit_price=0, stop_loss=0,commission=0):
+    def enter_position(self, type, entry_capital, entry_price, exit_price=0, stop_loss=0, commission=0):
         """Open a position.
 
         :param type: Type of position e.g. ("long, short")
@@ -201,7 +201,7 @@ class account():
         :type exit_price: float
         :param stop_loss: Price at which to cut losses
         :type stop_loss: float
-        :param commision: commision is in % 
+        :param commision: Percent commission subtracted from position size
         :type commision: float
         """ 
         entry_capital = float(entry_capital)
@@ -217,7 +217,7 @@ class account():
         else: 
             self.buying_power -= entry_capital
             if commission > 0:
-                shares = entry_capital / (entry_price + commission*entry_price)
+                shares = entry_capital / (entry_price + commission * entry_price)
             else:
                 shares = entry_capital / entry_price
 
@@ -239,7 +239,7 @@ class account():
             self.opened_trades.append(opened_trade(type, self.date))
             self.no += 1    
 
-    def close_position(self, position, percent, current_price, commission =0):
+    def close_position(self, position, percent, current_price, commission=0):
         """Close a position.
 
         :param position: Position id number
@@ -248,7 +248,7 @@ class account():
         :type percent: float
         :param current_price: Price at which position is closed
         :type current_price: float
-        :param commision: commision is in % 
+        :param commision: Percent commission subtracted from capital returned
         :type commision: float
         """ 
         if percent > 1 or percent < 0: 
@@ -262,12 +262,11 @@ class account():
                                                    position.entry_price, 
                                                    current_price))
             
-            if commission == 0:
-                self.buying_power += position.close(percent, current_price)
-            
-            elif commission > 0:
+            if commission > 0:
                 closing_position_price = position.close(percent, current_price)
-                self.buying_power += (closing_position_price - closing_position_price*commission)
+                self.buying_power += (closing_position_price - closing_position_price * commission)
+            else:
+                self.buying_power += position.close(percent, current_price)
 
     def purge_positions(self):
         """Delete all empty positions.""" 
