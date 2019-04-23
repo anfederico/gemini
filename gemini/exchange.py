@@ -205,8 +205,9 @@ class account():
         :type commision: float
         """ 
         entry_capital = float(entry_capital)
-        if commission > 0:
-            entry_price +=  (commission*entry_price)
+        
+        
+            #print(entry_price)
         if entry_capital < 0: 
             raise ValueError("Error: Entry capital must be positive")          
         elif entry_price < 0: 
@@ -215,7 +216,11 @@ class account():
             raise ValueError("Error: Not enough buying power to enter position")          
         else: 
             self.buying_power -= entry_capital
-            shares = entry_capital / entry_price 
+            if commission > 0:
+                shares = entry_capital / (entry_price + commission*entry_price)
+            else:
+                shares = entry_capital / entry_price
+
             if type == 'long': 
                 self.positions.append(long_position(self.no, 
                                                     entry_price, 
@@ -257,10 +262,12 @@ class account():
                                                    position.entry_price, 
                                                    current_price))
             
-            self.buying_power += position.close(percent, current_price)
+            if commission == 0:
+                self.buying_power += position.close(percent, current_price)
             
-            if commission > 0:
-                self.buying_power -= (commission*position.close(percent, current_price))
+            elif commission > 0:
+                closing_position_price = position.close(percent, current_price)
+                self.buying_power += (closing_position_price - closing_position_price*commission)
 
     def purge_positions(self):
         """Delete all empty positions.""" 
