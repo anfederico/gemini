@@ -4,7 +4,7 @@ from gemini  import exchange
 import unittest
 
 class Methods(unittest.TestCase):
-
+    
     def test_errors(self):
         a = gemini.exchange.account(1000)
         self.assertRaises(ValueError, a.enter_position, 'long',  2000, 10)
@@ -45,6 +45,7 @@ class Methods(unittest.TestCase):
         self.assertEqual(a.buying_power, 1250)
         self.assertEqual(a.total_value(25), 2125)
 
+
     def test_short(self):
         a = gemini.exchange.account(1000)
         # Win on a short        
@@ -68,7 +69,7 @@ class Methods(unittest.TestCase):
         a.close_position(S2, 0.5, 4)
         self.assertEqual(a.buying_power, 187.5)
         self.assertEqual(a.total_value(4), 587.5)
-
+    
     def test_both(self):
         a = gemini.exchange.account(1000)
         a.enter_position('long',  200, 20)
@@ -85,7 +86,7 @@ class Methods(unittest.TestCase):
         a.close_position(short, 1.0, 50)
         self.assertEqual(a.buying_power, 1187.5)
         self.assertEqual(a.total_value(100), 1187.5)
-
+    
     def test_decimals(self):
         # long with decimals
         a = gemini.exchange.account(2)
@@ -99,6 +100,23 @@ class Methods(unittest.TestCase):
         self.assertEqual(a.total_value(0.00000001), 2.5)
         a.close_position(a.positions[0], 1, 0.00000001)
         self.assertEqual(a.buying_power, 2.5)
-
+    
+    def test_commision(self):
+        a = gemini.exchange.account(1000)
+        a.enter_position('long',  220, 20, commission=0.1) #10% commision
+        a.enter_position('short', 330, 30, commission=0.1) 
+        self.assertEqual(a.buying_power, 450) #
+        self.assertEqual(a.total_value(25), 1050)
+        long  = a.positions[0]
+        short = a.positions[1]
+        a.close_position(long,  0.5, 30, commission=0.1)
+        a.close_position(short, 0.5, 30, commission=0.1)
+        self.assertEqual(a.buying_power, 720) 
+        self.assertEqual(a.total_value(25), 1020)
+        a.close_position(long,  1.0, 50, commission =0.1)
+        a.close_position(short, 1.0, 30, commission=0.1)
+        self.assertEqual(a.buying_power, 1080)
+        self.assertEqual(a.total_value(100), 1080)
+    
 if __name__ == '__main__':
     unittest.main()
