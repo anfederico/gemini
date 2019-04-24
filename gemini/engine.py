@@ -1,4 +1,5 @@
 import bokeh.plotting
+from bokeh.io import output_notebook
 import pandas as pd
 import numpy as np
 import time
@@ -91,7 +92,7 @@ class backtest():
         print("Total Trades : {0}".format(longs + sells + shorts + covers))
         print("\n---------------------------------------")
     
-    def chart(self, show_trades=False, title="Equity Curve"):
+    def chart(self, show_trades=False, notebook=False, title="Equity Curve"):
         """Chart results.
 
         :param show_trades: Show trades on plot
@@ -109,7 +110,10 @@ class backtest():
         p.line(self.data['date'], base_equity, color='#CAD8DE', legend='Buy and Hold')
         p.line(self.data['date'], self.account.equity, color='#49516F', legend='Strategy')
         p.legend.location = "top_left"
-
+        
+        if notebook:
+            output_notebook()
+            
         if show_trades:
             for trade in self.account.opened_trades:
                 try:
