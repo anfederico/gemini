@@ -100,7 +100,7 @@ def logic(account, lookback):
         if today['signal'] == "down":
             if yesterday['signal'] == "down":
                 exit_price = today['close']
-                for position in acount.positions:  
+                for position in account.positions:  
                     if position.type == 'long':
                         account.close_position(position, 0.5, exit_price)
 
