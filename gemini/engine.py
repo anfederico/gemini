@@ -1,6 +1,7 @@
 import bokeh.plotting
 import pandas as pd
 import numpy as np
+import warnings
 import time
 
 # Local imorts
@@ -17,6 +18,14 @@ class backtest():
         :return: A bactesting simulation
         :rtype: backtest
         """  
+        if not isinstance(data, pd.DataFrame):
+            raise ValueError("Data must be a pandas dataframe")
+
+        missing = set(['high', 'low', 'open', 'close', 'volume'])-set(data.columns)
+        if len(missing) > 0:
+            msg = "Missing {0} column(s), dataframe must be HLOCV+".format(list(missing))
+            warnings.warn(msg)
+
         self.data = data
 
     def start(self, initial_capital, logic):
@@ -38,6 +47,28 @@ class backtest():
     
             date = today['date']
             equity = self.account.total_value(today['close'])
+
+            # Stop loss handling
+            for p in self.account.positions:
+                if p.type == "long":
+                    if p.stop_hit(today['low']):
+                        self.account.close_position(p, 1.0, today['low'])
+                    else:
+                        if p.trailing_stop:
+                            if today['close'] > today['open']:
+                                p.stop_adjust(today['close'])
+
+                if p.type == "short":
+                    if p.stop_hit(today['high']):
+                        self.account.close_position(p, 1.0, today['high'])
+                    else:
+                        if p.trailing_stop:
+                            if today['close'] < today['open']:
+                                p.stop_adjust(today['close'])
+
+            self.account.purge_positions()
+
+            # TODO: Take profit handling
 
             # Update account variables
             self.account.date = date
