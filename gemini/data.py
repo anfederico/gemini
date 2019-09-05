@@ -134,7 +134,7 @@ def cc_available_exchanges(show=False):
         for i in data['Data']:
             try:
                 i.encode('utf-8')
-                if (data['Data'][i]['is_active']):
+                if (data['Data'][i]['isActive']):
                     exchanges.append(i)
             except UnicodeEncodeError:
                 pass
@@ -184,7 +184,7 @@ def cc_available_pairs(exchange, show=False):
     else:
         return pairs
 
-def cc_request_data(pair, exchange, start, end): 
+def cc_request_data(pair, exchange, start, end, api_key=''): 
     """Request historical data from Crypto Compare.
 
     :param pair: Trading pair
@@ -199,11 +199,13 @@ def cc_request_data(pair, exchange, start, end):
     :return: A pandas dataframe of historical data
     :rtype: pandas.DataFrame
     """
+
     params = {'fsym': pair.split("_")[0],
               'tsym': pair.split("_")[1],
               'toTs': (end-dt.datetime(1970,1,1)).total_seconds(),
               'limit': 2000,
               'aggregate': 1,
+              'api_key': api_key,
               'e': exchange}
     response = requests.get('https://min-api.cryptocompare.com/data/histoday', params=params)
     data = response.json()
