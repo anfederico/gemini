@@ -59,7 +59,7 @@ class backtest():
                                 p.stop_adjust(today['close'])
 
                 if p.type == "short":
-                    if p.stop_hit(today['high']):
+                    if p.stop_hit(today['high']) and p.stop_loss != 0:
                         self.account.close_position(p, 1.0, today['high'])
                     else:
                         if p.trailing_stop:
