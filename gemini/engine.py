@@ -38,7 +38,7 @@ class backtest():
 
         :return: A bactesting simulation
         :rtype: backtest
-        """         
+        """
         self.tracker = []
         self.account = exchange.account(initial_capital)
 
@@ -48,27 +48,14 @@ class backtest():
             date = today['date']
             equity = self.account.total_value(today['close'])
 
-            # Handle stop loss and take profit
+            # Handle stop loss
             for p in self.account.positions:
                 if p.type == "long":
                     if p.stop_hit(today['low']):
                         self.account.close_position(p, 1.0, today['low'])
-                    elif p.tp_hit(today['high']):
-                        self.account.close_position(p, 1.0, p.exit_price)
-                    else:
-                        if p.trailing_stop:
-                            if today['close'] > today['open']:
-                                p.stop_adjust(today['close'])
-
                 if p.type == "short":
                     if p.stop_hit(today['high']):
                         self.account.close_position(p, 1.0, today['high'])
-                    elif p.tp_hit(today['low']):
-                        self.account.close_position(p, 1.0, p.exit_price)
-                    else:
-                        if p.trailing_stop:
-                            if today['close'] < today['open']:
-                                p.stop_adjust(today['close'])
 
             self.account.purge_positions()
 

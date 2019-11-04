@@ -56,7 +56,7 @@ class closed_trade(opened_trade):
 class position:
     """A parent object representing a position."""
 
-    def __init__(self, no, entry_price, shares, exit_price, stop_loss, trailing_stop=False):
+    def __init__(self, no, entry_price, shares, exit_price, stop_loss):
         """Open the position.
 
         :param no: A unique position id number
@@ -79,7 +79,6 @@ class position:
         self.shares        = float(shares)
         self.exit_price    = float(exit_price)
         self.stop_loss     = float(stop_loss)
-        self.trailing_stop = trailing_stop 
     
     def show(self):
         print("No.     {0}".format(self.no))
@@ -92,7 +91,7 @@ class position:
 class long_position(position):
     """A child object representing a long position."""
 
-    def __init__(self, no, entry_price, shares, exit_price=math.inf, stop_loss=0, trailing_stop=False):
+    def __init__(self, no, entry_price, shares, exit_price=math.inf, stop_loss=0):
         """Open the position.
 
         :param no: A unique position id number
@@ -108,11 +107,12 @@ class long_position(position):
 
         :return: A long position
         :rtype: long_position
-        """        
-        super().__init__(no, entry_price, shares, exit_price, stop_loss, trailing_stop)
+        """
+
+        if exit_price is False: exit_price = math.inf
+        if stop_loss is False: stop_loss = 0
+        super().__init__(no, entry_price, shares, exit_price, stop_loss)
         self.type = 'long'
-        if trailing_stop:
-            self.stop_loss = entry_price * (1 - trailing_stop)
 
     def close(self, percent, current_price):
         """Close the position.
@@ -132,19 +132,11 @@ class long_position(position):
     def stop_hit(self, current_price):
         if current_price <= self.stop_loss:
             return(True)
-        
-    def tp_hit(self, current_price):
-        if current_price > self.exit_price:
-            return(True)
-
-    def stop_adjust(self, current_price):
-        if self.trailing_stop:
-            self.stop_loss = current_price * (1 - self.trailing_stop)
 
 class short_position(position):
     """A child object representing a short position."""
 
-    def __init__(self, no, entry_price, shares, exit_price=0, stop_loss=math.inf, trailing_stop=False):
+    def __init__(self, no, entry_price, shares, exit_price=0, stop_loss=math.inf):
         """Open the position.
 
         :param no: A unique position id number
@@ -161,10 +153,10 @@ class short_position(position):
         :return: A short position
         :rtype: short_position
         """       
-        super().__init__(no, entry_price, shares, exit_price, stop_loss, trailing_stop)
-        self.type = 'short' 
-        if trailing_stop:
-            self.stop_loss = entry_price * (1 + trailing_stop)
+        if exit_price is False: exit_price = 0
+        if stop_loss is False: stop_loss = math.inf
+        super().__init__(no, entry_price, shares, exit_price, stop_loss)
+        self.type = 'short'
 
     def close(self, percent, current_price):
         """Close the position.
@@ -189,14 +181,6 @@ class short_position(position):
         if current_price >= self.stop_loss:
             return(True)
 
-    def tp_hit(self, current_price):
-        if current_price < self.exit_price:
-            return(True)
-
-    def stop_adjust(self, current_price):
-        if self.trailing_stop:
-            self.stop_loss = current_price * (1 + self.trailing_stop)
-
 class account():
     """An object representing an exchange account."""
 
@@ -218,7 +202,7 @@ class account():
         self.opened_trades   = []
         self.closed_trades   = []
 
-    def enter_position(self, type, entry_capital, entry_price, exit_price=0, stop_loss=0, trailing_stop=False, commission=0):
+    def enter_position(self, type, entry_capital, entry_price, exit_price=False, stop_loss=False, commission=0):
         """Open a position.
 
         :param type: Type of position e.g. ("long, short")
@@ -249,20 +233,18 @@ class account():
             else:
                 shares = entry_capital / entry_price
 
-            if type == 'long': 
-                self.positions.append(long_position(self.no, 
-                                                    entry_price, 
+            if type == 'long':
+                self.positions.append(long_position(self.no,
+                                                    entry_price,
                                                     shares, 
-                                                    exit_price, 
-                                                    stop_loss,
-                                                    trailing_stop))
+                                                    exit_price,
+                                                    stop_loss))
             elif type == 'short': 
                 self.positions.append(short_position(self.no, 
-                                                     entry_price, 
+                                                     entry_price,
                                                      shares, 
-                                                     exit_price, 
-                                                     stop_loss,
-                                                     trailing_stop))    
+                                                     exit_price,
+                                                     stop_loss))
             else: 
                 raise TypeError("Error: Invalid position type.")
 
