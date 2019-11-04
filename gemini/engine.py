@@ -104,9 +104,9 @@ class backtest():
         covers = len([t for t in self.account.closed_trades if t.type == 'short'])
 
         print("Longs        : {0}".format(longs))
-        print("sells        : {0}".format(sells))
-        print("shorts       : {0}".format(shorts))
-        print("covers       : {0}".format(covers))
+        print("Sells        : {0}".format(sells))
+        print("Shorts       : {0}".format(shorts))
+        print("Covers       : {0}".format(covers))
         print("--------------------")
         print("Total Trades : {0}".format(longs + sells + shorts + covers))
         print("\n---------------------------------------")
