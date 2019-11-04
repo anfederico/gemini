@@ -56,7 +56,7 @@ class closed_trade(opened_trade):
 class position:
     """A parent object representing a position."""
 
-    def __init__(self, no, entry_price, shares, exit_price=0, stop_loss=0, trailing_stop=False):
+    def __init__(self, no, entry_price, shares, exit_price, stop_loss, trailing_stop=False):
         """Open the position.
 
         :param no: A unique position id number
@@ -73,7 +73,7 @@ class position:
         :return: A position
         :rtype: position
         """    
-        self.no             = no
+        self.no            = no
         self.type          = "None"
         self.entry_price   = float(entry_price)
         self.shares        = float(shares)
@@ -92,7 +92,7 @@ class position:
 class long_position(position):
     """A child object representing a long position."""
 
-    def __init__(self, no, entry_price, shares, exit_price=0, stop_loss=0, trailing_stop=False):
+    def __init__(self, no, entry_price, shares, exit_price=math.inf, stop_loss=0, trailing_stop=False):
         """Open the position.
 
         :param no: A unique position id number
@@ -131,6 +131,10 @@ class long_position(position):
 
     def stop_hit(self, current_price):
         if current_price <= self.stop_loss:
+            return(True)
+        
+    def tp_hit(self, current_price):
+        if current_price > self.exit_price:
             return(True)
 
     def stop_adjust(self, current_price):
@@ -183,6 +187,10 @@ class short_position(position):
 
     def stop_hit(self, current_price):
         if current_price >= self.stop_loss:
+            return(True)
+
+    def tp_hit(self, current_price):
+        if current_price < self.exit_price:
             return(True)
 
     def stop_adjust(self, current_price):
