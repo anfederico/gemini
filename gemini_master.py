@@ -3,9 +3,9 @@ import types
 import datetime
 import time
 import pandas as pd
-from gemini import exchange
-from gemini import helpers
-from gemini import settings
+from gemini_core import exchange
+from gemini_core import helpers
+from gemini_core import settings
 from empyrical import *
 from helpers.timeframe_resampler import resample
 

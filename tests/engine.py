@@ -1,5 +1,5 @@
 from context import gemini
-from gemini  import engine, helpers
+from gemini_core  import engine, helpers
 
 import unittest
 

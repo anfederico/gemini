@@ -1,5 +1,5 @@
 from context import gemini
-from gemini  import data
+from gemini_core  import data
 
 import unittest
 
