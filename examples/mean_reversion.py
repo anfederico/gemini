@@ -1,6 +1,6 @@
 # Load gemini
 from context import gemini
-from gemini  import data, engine, helpers
+from gemini_core  import data, engine, helpers
 
 # Global Imports
 import pandas as pd
