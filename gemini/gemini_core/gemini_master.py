@@ -7,7 +7,7 @@ from gemini.gemini_core import exchange
 from gemini.gemini_core import helpers
 from gemini.gemini_core import settings
 from gemini.empyrical import *
-from gemini.helpers import resample
+from gemini.helpers.timeframe_resampler import resample
 
 FEES = getattr(settings, "FEES", dict())
 
