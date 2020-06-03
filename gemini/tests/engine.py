@@ -1,12 +1,10 @@
-from context import gemini
-from gemini_core  import engine, helpers
+from gemini.gemini_core import engine, helpers
 
 import unittest
 
 # Global Imports
 import os
 import pandas as pd
-import numpy as np
 
 # Build mean reversion strategy
 from talib.abstract import *

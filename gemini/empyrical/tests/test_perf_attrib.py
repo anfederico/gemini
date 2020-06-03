@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import unittest
 
-from empyrical.perf_attrib import perf_attrib
+from gemini.empyrical import perf_attrib
 
 
 class PerfAttribTestCase(unittest.TestCase):
