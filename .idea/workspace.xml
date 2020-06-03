@@ -2,83 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="607d6a63-4406-432a-a1eb-23ad04a4a14b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/gemini/empyrical/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemini/helpers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gemini/tests/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/.travis.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.md" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/CONTRIBUTING.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/api-reference.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/api-reference.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/conf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/exporting-results.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/exporting-results.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/historical-data.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/historical-data.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/index.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/make.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/make.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/gemini.data.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/reference/gemini.data.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/gemini.engine.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/reference/gemini.engine.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/gemini.exchange.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/reference/gemini.exchange.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/gemini.helpers.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/reference/gemini.helpers.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/gemini.ptable.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/reference/gemini.ptable.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/gemini.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/reference/gemini.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/gemini.settings.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/reference/gemini.settings.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/modules.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/reference/modules.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/setup.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/setup.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/using-gemini.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/docs/using-gemini.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/_version.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/_version.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/deprecate.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/deprecate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/perf_attrib.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/perf_attrib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/periods.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/periods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/stats.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/stats.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/tests/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/tests/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/tests/test_data/factor_loadings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/tests/test_data/factor_loadings.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/tests/test_data/factor_returns.csv" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/tests/test_data/factor_returns.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/tests/test_data/intercepts.csv" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/tests/test_data/intercepts.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/tests/test_data/positions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/tests/test_data/positions.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/tests/test_data/residuals.csv" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/tests/test_data/residuals.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/tests/test_data/returns.csv" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/tests/test_data/returns.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/tests/test_perf_attrib.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/tests/test_perf_attrib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/tests/test_stats.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/tests/test_stats.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/empyrical/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/empyrical/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/context.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/context.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/data/BTC_USD.csv" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/data/BTC_USD.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/data/ETH_USD.csv" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/data/ETH_USD.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/data/LTC_USD.csv" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/data/LTC_USD.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/mean_reversion.html" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/mean_reversion.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/mean_reversion.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/mean_reversion.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/mean_reversion.png" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/mean_reversion.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/mean_reversion.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/mean_reversion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/mean_reversion.rst" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/mean_reversion.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemini_core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/gemini_core/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemini_core/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/gemini_core/data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemini_core/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/gemini_core/engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemini_core/exchange.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/gemini_core/exchange.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemini_core/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/gemini_core/helpers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemini_core/ptable.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/gemini_core/ptable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemini_core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/gemini_core/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gemini_master.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/gemini_core/gemini_master.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/examples/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/helpers/analyze.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/cryptocompare.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/helpers/cryptocompare.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/export_for_portfolioviz.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/helpers/export_for_portfolioviz.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/helpers/helpers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/poloniex.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/helpers/poloniex.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/timeframe_resampler.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/helpers/timeframe_resampler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/example.png" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/media/example.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/media/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/schematic.gif" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/media/schematic.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/context.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/tests/context.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/tests/data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/tests/engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/exchange.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/tests/exchange.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/gemini/tests/helpers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -134,7 +58,7 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gemini/setup.py">
+        <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
               <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
@@ -246,12 +170,6 @@
               <item name="Gemini" type="b2602c69:ProjectViewProjectNode" />
               <item name="Gemini" type="462c0819:PsiDirectoryNode" />
               <item name="gemini" type="462c0819:PsiDirectoryNode" />
-              <item name="empyrical" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Gemini" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Gemini" type="462c0819:PsiDirectoryNode" />
-              <item name="gemini" type="462c0819:PsiDirectoryNode" />
               <item name="gemini_core" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -262,7 +180,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1591173478977" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1591173650644" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -274,9 +192,9 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/gemini" />
       <recent name="$PROJECT_DIR$/gemini_core" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -315,14 +233,14 @@
   <component name="ToolWindowManager">
     <frame x="966" y="0" width="954" height="1080" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2982456" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2982456" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info active="true" id="Terminal" order="7" visible="true" weight="0.64912283" />
+      <window_info id="Terminal" order="7" weight="0.64912283" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -385,7 +303,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gemini/setup.py">
+    <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
