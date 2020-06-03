@@ -1,3 +1,5 @@
+import math
+
 def percent_change(d1, d2):
     """Calculate percent change between two numbers.
 
@@ -21,8 +23,19 @@ def profit(initial_capital, multiplier):
 
     :return: Profit
     :rtype: float
-    """    
+    """
     return initial_capital * (multiplier + 1.0) - initial_capital
+
+def rnd(value, prec=8):
+    """
+    Return good float value
+    :param value:
+    :param prec: precession
+    :return:
+    """
+    round_prec = 10 ** prec
+    rounded = math.ceil(value * round_prec)
+    return rounded / round_prec
 
 class period():
     """An object representing a period of time."""

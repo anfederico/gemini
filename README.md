@@ -14,17 +14,18 @@
 ## Install
 
 ```bash
-pip3 install git+git://github.com/anfederico/Gemini.git
+pip3 install git+git://github.com/liamhartley/Gemini.git
 ```
 
 ## Load
 ```python
-from gemini import data, engine, helpers
+from gemini_core import data, engine, helpers
 ```
 
 ## Examples
-
-*For more information, please refer to the [full documentation](https://gemini-docs.readthedocs.io/en/latest/)*
+- [Automated cryptocurrency trading bot deployed into AWS with Terraform and Python.](https://github.com/liamhartley/crypto_trading_bot)
+- [Mean reversion strategy](https://github.com/anfederico/Gemini/blob/master/examples/mean_reversion.ipynb)
+- For more information, please refer to the [full documentation](https://gemini-docs.readthedocs.io/en/latest/)*.
 
 #### Input Data (Optional)
 If you have your own data that has/hasn't been processed, you should conform to the following structure. Basically, load your data into a Pandas dataframe object and be sure to convert the dates to datetime format and include the following lowercase column titles.
@@ -147,5 +148,9 @@ backtest.chart()
 
 <p align="center"><img src="https://raw.githubusercontent.com/anfederico/Gemini/master/media/example.png"><p>
 
-#### Real Example
-Please take a look at our real example of a [mean reversion strategy](https://github.com/anfederico/Gemini/blob/master/examples/mean_reversion.ipynb)
+#### Acknowledgements
+
+- https://github.com/anfederico/Gemini
+- https://github.com/quantroom-pro/cryptocurrency.backtester
+- Any other relevant forked project.
+
