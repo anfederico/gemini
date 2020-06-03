@@ -18,8 +18,7 @@ except ImportError:
     # This moved in pandas 0.20.
     from pandas.util.testing import assert_index_equal
 
-import empyrical
-import empyrical.utils as emutils
+from gemini import empyrical, empyrical as emutils
 
 DECIMAL_PLACES = 8
 
@@ -554,7 +553,7 @@ class TestStats(BaseTestCase):
         (mixed_returns, mixed_returns, empyrical.DAILY, np.nan),
         (mixed_returns, 0.0, empyrical.DAILY, 2.605531251673693),
         (mixed_returns, flat_line_1, empyrical.DAILY,
-            -1.3934779588919977),
+         -1.3934779588919977),
         (positive_returns, 0.0, empyrical.DAILY, np.inf),
         (negative_returns, 0.0, empyrical.DAILY, -13.532743075043401),
         (simple_benchmark, 0.0, empyrical.DAILY, np.inf),

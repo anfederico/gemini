@@ -3,11 +3,11 @@ import types
 import datetime
 import time
 import pandas as pd
-from gemini_core import exchange
-from gemini_core import helpers
-from gemini_core import settings
-from empyrical import *
-from helpers.timeframe_resampler import resample
+from gemini.gemini_core import exchange
+from gemini.gemini_core import helpers
+from gemini.gemini_core import settings
+from gemini.empyrical import *
+from gemini.helpers import resample
 
 FEES = getattr(settings, "FEES", dict())
 
@@ -163,7 +163,7 @@ class Gemini:
             ("Capital", self.account.initial_capital, ""),
             ("Final Equity", self.data['base_equity'][-1], ""),
             ("Net profit",
-             helpers.profit(self.account.initial_capital, percent_change)," ({:+.2f}%)".format(percent_change * 100)),
+             helpers.profit(self.account.initial_capital, percent_change), " ({:+.2f}%)".format(percent_change * 100)),
             ("Max Drawdown",
              max_drawdown(benchmark) * 100, "%"),
         ]
