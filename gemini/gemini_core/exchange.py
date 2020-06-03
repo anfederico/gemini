@@ -1,303 +1,287 @@
-import copy
-import math
+import gemini.gemini_core.settings as settings
+from gemini.gemini_core.helpers import rnd
 
-class opened_trade():
-    """An object representing an open trade."""
+PRECISION = getattr(settings, "PRECISION", 8)
+FEES = getattr(settings, "FEES", dict())
 
-    def __init__(self, type, date):
-        """Initate the trade.
 
-        :param type: Type of trade
-        :type type: float
-        :param date: When the trade was opened
-        :type date: datetime
+class OpenedTrade:
+    """
+    Open trades main class
+    """
 
-        :return: A trade
-        :rtype: trade
-        """  
-        self.type = type
+    def __init__(self, type_, date, price=None, size=None, fee=None):
+        self.type_ = type_
         self.date = date
+        self.price = price
+        self.size = size
+        self.fee = fee
 
     def __str__(self):
-        return "{0}\n{1}".format(self.type, self.date)
+        return "OpenedTrade: {0} {1} {2:.8f} x {3:.8f} Fee: {4:.8f}".format(
+            self.date, self.type_, self.price, self.size, self.fee)
 
-class closed_trade(opened_trade):
-    """An object representing a closed trade."""
 
-    def __init__(self, type, date, shares, entry, exit):
-        """Initate the trade.
+class ClosedTrade(OpenedTrade):
+    """
+    Closed trade class
+    """
 
-        :param type: Type of trade
-        :type type: float
-        :param date: When the trade was closed
-        :type date: datetime
-        :param shares: Number of shares
-        :type shares: float
-        :param entry: Entry price
-        :type entry: float
-        :param exit: Exit price
-        :type exit: float
-
-        :return: A trade
-        :rtype: trade
-        """  
-        super().__init__(type, date)
+    def __init__(self, type_, date, shares, entry, exit, fee):
+        super().__init__(type_, date)
         self.shares = float(shares)
-        self.entry  = float(entry)
-        self.exit   = float(exit)
-    
+        self.entry = float(entry)  # enter price
+        self.exit = float(exit)  # exit price
+        self.fee = fee  # deal fee
+
     def __str__(self):
-        return "{0}\n{1}\n{2}\n{3}\n{4}".format(self.type, 
-                                                self.date, 
-                                                self.shares, 
-                                                self.entry, 
+        return "{0}\n{1}\n{2}\n{3}\n{4}".format(self.type_, self.date,
+                                                self.shares, self.entry,
                                                 self.exit)
 
-class position:
-    """A parent object representing a position."""
 
-    def __init__(self, no, entry_price, shares, exit_price, stop_loss):
-        """Open the position.
+class Position:
+    """
+    Position main class
+    """
 
-        :param no: A unique position id number
-        :type no: float
-        :param entry_price: Entry price at which shares are longed/shorted
-        :type entry_price: float
-        :param shares: Number of shares to long/short
-        :type shares: float
-        :param exit_price: Price at which to take profit
-        :type exit_price: float
-        :param stop_loss: Price at which to cut losses
-        :type stop_loss: float
+    def __init__(self, number, entry_price, shares, exit_price=0, stop_loss=0):
+        self.number = number
+        self.type_ = "None"
+        self.entry_price = float(entry_price)
+        self.shares = float(shares)
+        self.exit_price = float(exit_price)
+        self.stop_loss = float(stop_loss)
 
-        :return: A position
-        :rtype: position
-        """    
-        self.no            = no
-        self.type          = "None"
-        self.entry_price   = float(entry_price)
-        self.shares        = float(shares)
-        self.exit_price    = float(exit_price)
-        self.stop_loss     = float(stop_loss)
-    
     def show(self):
-        print("No.     {0}".format(self.no))
-        print("Type:   {0}".format(self.type))
+        """
+        Print position info
+        :return:
+        """
+        print("No. {0}".format(self.number))
+        print("Type:   {0}".format(self.type_))
         print("Entry:  {0}".format(self.entry_price))
         print("Shares: {0}".format(self.shares))
         print("Exit:   {0}".format(self.exit_price))
         print("Stop:   {0}\n".format(self.stop_loss))
 
-class long_position(position):
-    """A child object representing a long position."""
+    def __str__(self):
+        return "{} {}x{}".format(self.type_, self.shares, self.entry_price)
 
-    def __init__(self, no, entry_price, shares, exit_price=math.inf, stop_loss=0):
-        """Open the position.
 
-        :param no: A unique position id number
-        :type no: float
-        :param entry_price: Entry price at which shares are longed
-        :type entry_price: float
-        :param shares: Number of shares to long
-        :type shares: float
-        :param exit_price: Price at which to take profit
-        :type exit_price: float
-        :param stop_loss: Price at which to cut losses
-        :type stop_loss: float
+class LongPosition(Position):
+    """
+    Long position class
+    """
 
-        :return: A long position
-        :rtype: long_position
-        """
-
-        if exit_price is False: exit_price = math.inf
-        if stop_loss is False: stop_loss = 0
-        super().__init__(no, entry_price, shares, exit_price, stop_loss)
-        self.type = 'long'
+    def __init__(self, number, entry_price, shares, fee, exit_price=0,
+                 stop_loss=0):
+        super().__init__(number, entry_price, shares, exit_price, stop_loss)
+        self.type_ = 'Long'
+        self.fee = fee
 
     def close(self, percent, current_price):
-        """Close the position.
+        """
+        Decrease shares count by percent and return value of closed shares.
 
-        :param percent: Percent of position size to close
-        :type percent: float
-        :param current_price: Closing price
-        :type current_price: float
-
-        :return: Amount of capital gained from closing position
-        :rtype: float
+        :param percent:
+        :param current_price:
+        :return:
         """
         shares = self.shares
         self.shares *= 1.0 - percent
         return shares * percent * current_price
 
-    def stop_hit(self, current_price):
-        if current_price <= self.stop_loss:
-            return(True)
 
-class short_position(position):
-    """A child object representing a short position."""
+class ShortPosition(Position):
+    """
+    Short position class
+    """
 
-    def __init__(self, no, entry_price, shares, exit_price=0, stop_loss=math.inf):
-        """Open the position.
-
-        :param no: A unique position id number
-        :type no: int
-        :param entry_price: Entry price at which shares are shorted
-        :type entry_price: float
-        :param shares: Number of shares to short
-        :type shares: float
-        :param exit_price: Price at which to take profit
-        :type exit_price: float
-        :param stop_loss: Price at which to cut losses
-        :type stop_loss: float
-
-        :return: A short position
-        :rtype: short_position
-        """       
-        if exit_price is False: exit_price = 0
-        if stop_loss is False: stop_loss = math.inf
-        super().__init__(no, entry_price, shares, exit_price, stop_loss)
-        self.type = 'short'
+    def __init__(self, number, entry_price, shares, fee, exit_price=0,
+                 stop_loss=0):
+        super().__init__(number, entry_price, shares, exit_price, stop_loss)
+        self.type_ = 'Short'
+        self.fee = fee
 
     def close(self, percent, current_price):
-        """Close the position.
-
-        :param percent: Percent of position size to close
-        :type percent: float
-        :param current_price: Closing price
-        :type current_price: float
-
-        :return: Amount of capital gained from closing position
-        :rtype: float
         """
+        Decrease shares count by percent and return value of closed shares.
+
+        :param percent:
+        :param current_price:
+        :return:
+        """
+
         entry = self.shares * percent * self.entry_price
-        exit = self.shares * percent * current_price
+        exit_ = self.shares * percent * current_price
         self.shares *= 1.0 - percent
-        if entry - exit + entry <= 0: 
+        if entry - exit_ + entry <= 0:
             return 0
-        else: 
-            return entry - exit + entry
+        else:
+            return entry - exit_ + entry
 
-    def stop_hit(self, current_price):
-        if current_price >= self.stop_loss:
-            return(True)
 
-class account():
-    """An object representing an exchange account."""
+class Account:
+    """
+    Main account class
+    Store settings and trades data
+    """
+    fee = FEES
 
-    def __init__(self, initial_capital):
-        """Initiate an account.
+    def __init__(self, initial_capital, fee=None):
+        self.initial_capital = initial_capital
+        self.buying_power = initial_capital
+        self.number = 0
+        self.date = None
+        self.equity = []
+        self.positions = []
+        self.opened_trades = []
+        self.closed_trades = []
+        if isinstance(fee, dict):
+            self.fee = fee
 
-        :param initial_capital: Starting capital to fund account
-        :type initial_capital: float
+    def enter_position(self, type_, entry_capital, entry_price, exit_price=0,
+                       stop_loss=0):
+        """
+        Open position
+        :param type_:
+        :param entry_capital:
+        :param entry_price:
+        :param exit_price:
+        :param stop_loss:
+        :return:
+        """
 
-        :return: An account object
-        :rtype: account
-        """ 
-        self.initial_capital = float(initial_capital)
-        self.buying_power    = float(initial_capital)
-        self.no              = 0
-        self.date            = None
-        self.equity          = []
-        self.positions       = []
-        self.opened_trades   = []
-        self.closed_trades   = []
-
-    def enter_position(self, type, entry_capital, entry_price, exit_price=False, stop_loss=False, commission=0):
-        """Open a position.
-
-        :param type: Type of position e.g. ("long, short")
-        :type type: float
-        :param entry_price: Amount of capital invested into position
-        :type entry_price: float
-        :param entry_price: Entry price at which shares are longed/shorted
-        :type entry_price: float
-        :param exit_price: Price at which to take profit
-        :type exit_price: float
-        :param stop_loss: Price at which to cut losses
-        :type stop_loss: float
-        :param commision: Percent commission subtracted from position size
-        :type commision: float
-        """ 
-        entry_capital = float(entry_capital)
-        
-        if entry_capital < 0: 
-            raise ValueError("Error: Entry capital must be positive")          
-        elif entry_price < 0: 
+        if entry_capital < 0:
+            raise ValueError("Error: Entry capital must be positive")
+        elif entry_price < 0:
             raise ValueError("Error: Entry price cannot be negative.")
-        elif self.buying_power < entry_capital: 
-            raise ValueError("Error: Not enough buying power to enter position")          
-        else: 
-            self.buying_power -= entry_capital
-            if commission > 0:
-                shares = entry_capital / (entry_price + commission * entry_price)
+        elif self.buying_power < entry_capital:
+            raise ValueError("Error: Not enough buying power to enter position")
+        else:
+            # apply fee to price
+            price_with_fee = self.apply_fee(entry_price, type_, 'Open')
+
+            # round shares and calculate position capital
+            size = rnd(entry_capital / price_with_fee)
+            pos_amount = rnd(entry_price * size)
+
+            # calculate trading fee for position
+            trade_fee = rnd(pos_amount * self.fee.get(type_, 0))
+            # calc buying power
+            self.buying_power -= pos_amount + trade_fee
+
+            if type_ == 'Long':
+                position = LongPosition(
+                    self.number, entry_price, size, trade_fee, exit_price,
+                    stop_loss)
+
+            elif type_ == 'Short':
+                position = ShortPosition(
+                    self.number, entry_price, size, trade_fee, exit_price,
+                    stop_loss)
+
             else:
-                shares = entry_capital / entry_price
+                raise TypeError("Invalid position type.")
 
-            if type == 'long':
-                self.positions.append(long_position(self.no,
-                                                    entry_price,
-                                                    shares, 
-                                                    exit_price,
-                                                    stop_loss))
-            elif type == 'short': 
-                self.positions.append(short_position(self.no, 
-                                                     entry_price,
-                                                     shares, 
-                                                     exit_price,
-                                                     stop_loss))
-            else: 
-                raise TypeError("Error: Invalid position type.")
+            self.positions.append(position)
+            self.opened_trades.append(
+                OpenedTrade(type_, self.date, entry_price, size, trade_fee))
+            self.number += 1
 
-            self.opened_trades.append(opened_trade(type, self.date))
-            self.no += 1    
+    def close_position(self, position, percent, price):
+        """
+        close position
+        :param position:
+        :param percent:
+        :param price:
+        :return:
+        """
 
-    def close_position(self, position, percent, current_price, commission=0):
-        """Close a position.
+        # TODO Change order logic to:
+        # order_percent(asset, percent > 0)
+        # if >0: check and buy/close if necessary
+        # if 0: check and close if position exists
 
-        :param position: Position id number
-        :type position: int
-        :param percent: Percent of position size to close
-        :type percent: float
-        :param current_price: Price at which position is closed
-        :type current_price: float
-        :param commision: Percent commission subtracted from capital returned
-        :type commision: float
-        """ 
-        if percent > 1 or percent < 0: 
-            raise ValueError("Error: Percent must range between 0-1.")
-        elif current_price < 0:
-            raise ValueError("Error: Current price cannot be negative.")                
-        else: 
-            self.closed_trades.append(closed_trade(position.type, 
-                                                   self.date, 
-                                                   position.shares * percent, 
-                                                   position.entry_price, 
-                                                   current_price))
-            
-            if commission > 0:
-                closing_position_price = position.close(percent, current_price)
-                self.buying_power += (closing_position_price - closing_position_price * commission)
-            else:
-                self.buying_power += position.close(percent, current_price)
+        if percent > 1 or percent < 0:
+            raise ValueError(
+                "Error: Percent must range between 0-1.")
+        elif price < 0:
+            raise ValueError("Error: Current price cannot be negative.")
+        else:
+            # get trade fee
+            # FIXME Use type by direction: buy-Long, sell-Short
+            trade_fee = rnd(
+                price * position.shares * self.fee.get(position.type_, 0))
+
+            self.closed_trades.append(
+                ClosedTrade(position.type_, self.date,
+                            position.shares * percent,
+                            position.entry_price, price, trade_fee))
+            self.buying_power += position.close(percent, price) - trade_fee
+
+    def apply_fee(self, price, type_, direction):
+        """
+        Apply fee to price by position type & transaction direction
+
+        Position types:
+        * Long
+        * Short
+
+        Directions:
+        * Open : Add fee to Long price, subtract fee from Short price
+        * Close : Subtract fee from Long price, add fee to Short price
+
+        :param price:
+        :param type_:
+        :param direction:
+        :return:
+        """
+        sign = 1 if direction == 'Open' else -1
+
+        # change price with fee
+        fee = self.fee.get(type_, 0)
+        if type_ == 'Long':
+            price *= 1 + sign * fee
+        elif type_ == 'Short':
+            price *= 1 - sign * fee
+
+        # round price
+        return rnd(price)
 
     def purge_positions(self):
-        """Delete all empty positions.""" 
-        self.positions = [p for p in self.positions if p.shares > 0]        
+        """
+        Delete positions without shares?
+        :return:
+        """
+
+        # FIXME Fix to remove positions on close
+
+        self.positions = [p for p in self.positions if p.shares > 0]
 
     def show_positions(self):
-        """Show all account positions.""" 
-        for p in self.positions: p.show()
+        """
+        Show open position info
+        :return:
+        """
+        for p in self.positions:
+            p.show()
 
     def total_value(self, current_price):
-        """Calculate total value of account
+        """
+        Return total balance with open positions
 
-        :param current_price: Price used to value open position sizes
-        :type current_price: float
-
-        :return: Total value of acocunt
-        :rtype: float
-        """ 
-        temporary = copy.deepcopy(self)
-        for position in temporary.positions:
-            temporary.close_position(position, 1.0, current_price)
-        return temporary.buying_power
+        :param current_price:
+        :return:
+        """
+        # print(self.buying_power)
+        # for p in self.positions: print(p)  # positions
+        # for ot in self.opened_trades: print(ot)  # open trades
+        in_pos = sum(
+            [p.shares * current_price for p in self.positions
+             if p.type_ == 'Long']) + sum(
+            [p.shares * (p.entry_price - current_price + p.entry_price)
+             for p in self.positions
+             if p.type_ == 'Short'])
+        return self.buying_power + in_pos
