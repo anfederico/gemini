@@ -11,6 +11,9 @@
 <br>
 <p align="center"><img src="https://github.com/anfederico/Gemini/blob/master/media/schematic.gif" width="550px"><p>
 
+# Gemini
+Backtesting for sleepless cryptocurrency markets 
+
 ## Install
 
 ```bash
