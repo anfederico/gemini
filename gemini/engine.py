@@ -17,7 +17,7 @@ class backtest():
 
         :return: A bactesting simulation
         :rtype: backtest
-        """  
+        """
         if not isinstance(data, pd.DataFrame):
             raise ValueError("Data must be a pandas dataframe")
 
@@ -42,9 +42,9 @@ class backtest():
         self.tracker = []
         self.account = exchange.account(initial_capital)
 
-        # Enter backtest ---------------------------------------------  
+        # Enter backtest ---------------------------------------------
         for index, today in self.data.iterrows():
-    
+
             date = today['date']
             equity = self.account.total_value(today['close'])
 
@@ -64,7 +64,7 @@ class backtest():
             self.account.equity.append(equity)
 
             # Equity tracking
-            self.tracker.append({'date': date, 
+            self.tracker.append({'date': date,
                                  'benchmark_equity' : today['close'],
                                  'strategy_equity' : equity})
 
@@ -73,7 +73,7 @@ class backtest():
             logic(self.account, lookback)
 
             # Cleanup empty positions
-            self.account.purge_positions()     
+            self.account.purge_positions()
         # ------------------------------------------------------------
 
         # For pyfolio
@@ -84,8 +84,8 @@ class backtest():
         del df['date']
         return df
 
-    def results(self):   
-        """Print results"""           
+    def results(self):
+        """Print results"""
         print("-------------- Results ----------------\n")
         being_price = self.data.iloc[0]['open']
         final_price = self.data.iloc[-1]['close']
@@ -93,7 +93,7 @@ class backtest():
         pc = helpers.percent_change(being_price, final_price)
         print("Buy and Hold : {0}%".format(round(pc*100, 2)))
         print("Net Profit   : {0}".format(round(helpers.profit(self.account.initial_capital, pc), 2)))
-        
+
         pc = helpers.percent_change(self.account.initial_capital, self.account.total_value(final_price))
         print("Strategy     : {0}%".format(round(pc*100, 2)))
         print("Net Profit   : {0}".format(round(helpers.profit(self.account.initial_capital, pc), 2)))
@@ -110,7 +110,7 @@ class backtest():
         print("--------------------")
         print("Total Trades : {0}".format(longs + sells + shorts + covers))
         print("\n---------------------------------------")
-    
+
     def chart(self, show_trades=False, title="Equity Curve"):
         """Chart results.
 
@@ -118,16 +118,16 @@ class backtest():
         :type show_trades: bool
         :param title: Plot title
         :type title: str
-        """     
+        """
         bokeh.plotting.output_file("chart.html", title=title)
         p = bokeh.plotting.figure(x_axis_type="datetime", plot_width=1000, plot_height=400, title=title)
         p.grid.grid_line_alpha = 0.3
         p.xaxis.axis_label = 'Date'
         p.yaxis.axis_label = 'Equity'
         shares = self.account.initial_capital/self.data.iloc[0]['open']
-        base_equity = [price*shares for price in self.data['open']]      
-        p.line(self.data['date'], base_equity, color='#CAD8DE', legend='Buy and Hold')
-        p.line(self.data['date'], self.account.equity, color='#49516F', legend='Strategy')
+        base_equity = [price*shares for price in self.data['open']]
+        p.line(pd.to_datetime(self.data['date']), base_equity, color='#CAD8DE', legend='Buy and Hold')
+        p.line(pd.to_datetime(self.data['date']), self.account.equity, color='#49516F', legend='Strategy')
         p.legend.location = "top_left"
 
         if show_trades:
@@ -148,5 +148,5 @@ class backtest():
                     elif trade.type == 'short': p.circle(x, y, size=6, color='orange', alpha=0.5)
                 except:
                     pass
-        
+
         bokeh.plotting.show(p)
