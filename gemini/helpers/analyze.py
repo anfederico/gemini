@@ -9,7 +9,7 @@ from bokeh.models import LinearAxis, Range1d
 logger = logging.getLogger(__name__)
 
 
-def analyze_bokeh(algo, data_CMO, title=None, show_trades=False):
+def analyze_bokeh(algo, title=None, show_trades=False):
     """
     Draw charts for backtest results
 
@@ -21,10 +21,9 @@ def analyze_bokeh(algo, data_CMO, title=None, show_trades=False):
     """
     # TODO Replace to Gemini class
 
-    bokeh.plotting.output_file("OpaquePool.html", title=title)
+    bokeh.plotting.output_file("results.html")
     p = bokeh.plotting.figure(x_axis_type="datetime", plot_width=1000,
-                              plot_height=400,
-                              title=title)
+                              plot_height=400)
     p.grid.grid_line_alpha = 0.3
     p.xaxis.axis_label = 'Date'
     p.yaxis.axis_label = 'Equity'
@@ -61,10 +60,6 @@ def analyze_bokeh(algo, data_CMO, title=None, show_trades=False):
            color='#49516F',
            legend='Strategy')
            #,y_range_name="equity_y_axis")
-    p.line(data_CMO.index, data_CMO['CMO'],
-           color='#0000FF',
-           legend='CMO',
-           y_range_name="cmo_y_axis")
 
     cmo_above_50 = bokeh.models.Span(location=50,
                                      dimension="width",

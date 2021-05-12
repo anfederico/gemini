@@ -1,5 +1,6 @@
 import logging
 import types
+import csv
 import datetime
 import time
 import pandas as pd
@@ -20,7 +21,6 @@ class Gemini:
     """
     data = None  # storage for history data
     account = None  # exchange account simulator
-    indicator_data = {'date': [], 'CMO': []}
     sim_params = {
         'capital_base': 10e5,
         'data_frequency': 'D',
@@ -69,7 +69,7 @@ class Gemini:
         """
         pass
 
-    def logic(self, data):
+    def logic(self, data, **kwargs):
         """
         Central method which will be called for every tick
         in trading interval.
@@ -78,11 +78,6 @@ class Gemini:
         :return:
         """
         pass
-
-    def create_indicator_dataframe(self):
-        df = pd.DataFrame(self.indicator_data)
-        df = df.set_index(['date'])
-        return df
 
     def run(self, data, **kwargs):
         """
@@ -125,9 +120,8 @@ class Gemini:
 
             # Cleanup empty positions
             self.account.purge_positions()
-        data_CMO = self.create_indicator_dataframe()
         self.results()
-        self.analyze(data_CMO=data_CMO, **kwargs)
+        self.analyze(self, **kwargs)
 
     def results(self):
         """
@@ -236,7 +230,137 @@ class Gemini:
 
         print("-" * len(title))
         results_history.write("-" * len(title) + '\n' * 3)
+
+        tuple_results = bench + stat + strategy
+        for element in tuple_results:
+            element = element[0:2]
+
+
         return percent_change
 
     def analyze(self):
         pass
+
+    def save_results_to_csv(self, filepath, additional_datapoints):
+        """
+        Print results of backtest to console and save results to a csv
+        :return:
+        """
+
+        ts = time.time()
+        results_history = open("results_history.txt", 'a')
+        results_history.write(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') + '\n')
+
+        title = "{:=^50}".format(
+            " Results (freq {}) ".format(self.sim_params['data_frequency']))
+        print(title + "\n")
+        begin_price = self.data.iloc[0]['open']
+        final_price = self.data.iloc[-1]['close']
+
+        shares = self.account.initial_capital / self.data.iloc[0]['close']
+        self.data['base_equity'] = [price * shares for price in
+                                    self.data['close']]
+        self.data['equity'] = [e for _, e in self.account.equity]
+
+        # STRING FORMATS
+        title_fmt = "{:-^40}"
+        str_fmt = "{0:<13}: {1:.2f}{2}"
+
+        # BENCHMARK
+        percent_change = helpers.percent_change(self.data['base_equity'][0],
+                                                self.data['base_equity'][-1])
+
+        benchmark = self.data['base_equity'].pct_change()
+        bench = [
+            ("Capital", self.account.initial_capital, ""),
+            ("Final Equity", self.data['base_equity'][-1], ""),
+            ("Net profit",
+             helpers.profit(self.account.initial_capital, percent_change), " ({:+.2f}%)".format(percent_change * 100)),
+            ("Max Drawdown",
+             max_drawdown(benchmark) * 100, "%"),
+        ]
+
+        print(title_fmt.format(" Benchmark "))
+        results_history.write(title_fmt.format(" Benchmark ") + '\n')
+        for r in bench:
+            print(str_fmt.format(*r))
+            results_history.write(str_fmt.format(*r) + '\n')
+
+        # STRATEGY
+        percent_change = helpers.percent_change(self.data['equity'][0],
+                                                self.data['equity'][-1])
+        open_fee = sum([t.fee for t in self.account.opened_trades])
+        close_fee = sum([t.fee for t in self.account.closed_trades])
+
+        # print trades
+        # for t in self.account.opened_trades: print(t)
+
+        returns = self.data['equity'].pct_change()
+        strategy = [
+            ("Capital", self.account.initial_capital, ""),
+            ("Final Equity", self.data['equity'][-1], ""),
+            ("Net profit",
+             helpers.profit(self.account.initial_capital, percent_change),
+             " ({:+.2f}%)".format(percent_change * 100)),
+            ("Max Drawdown",
+             max_drawdown(returns)*100, "%"),
+            ("Sharpe Ratio",
+             sharpe_ratio(returns), ""),
+            ("Sortino Ratio",
+             sortino_ratio(returns), ""),
+            ("Alpha",
+             alpha(returns, benchmark), ""),
+            ("Beta",
+             beta(returns, benchmark), ""),
+            ("Fees paid", open_fee + close_fee, ""),
+        ]
+
+        print(title_fmt.format(" Strategy "))
+        results_history.write(title_fmt.format(" Strategy ") + '\n')
+        for r in strategy:
+            print(str_fmt.format(*r))
+            results_history.write(str_fmt.format(*r) + '\n')
+
+        # STATISTICS
+        longs = len(
+            [t for t in self.account.opened_trades if t.type_ == 'Long'])
+        sells = len(
+            [t for t in self.account.closed_trades if t.type_ == 'Long'])
+        shorts = len(
+            [t for t in self.account.opened_trades if t.type_ == 'Short'])
+        covers = len(
+            [t for t in self.account.closed_trades if t.type_ == 'Short'])
+
+        stat = [
+            ("Longs", longs, ""),
+            ("Sells", sells, ""),
+            ("Shorts", shorts, ""),
+            ("Covers", covers, ""),
+            ("Total Trades", longs + sells + shorts + covers, ""),
+        ]
+        str_fmt = "{0:<13}: {1:.0f}{2}"
+
+        results_history.write(title_fmt.format(" Statistics ") + '\n')
+        print(title_fmt.format(" Statistics "))
+        for r in stat:
+            print(str_fmt.format(*r))
+            results_history.write(str_fmt.format(*r) + '\n')
+
+        print("-" * len(title))
+        results_history.write("-" * len(title) + '\n' * 3)
+
+        results = []
+        for datapoint in additional_datapoints:
+            results.append(datapoint)
+        for outcome in strategy:
+            results.append(outcome[1])
+        for outcome in bench:
+            results.append(outcome[1])
+        for outcome in stat:
+            results.append(outcome[1])
+
+        with open(filepath, 'a') as f:
+            writer = csv.writer(f)
+            writer.writerow(results)
+
+        return percent_change
