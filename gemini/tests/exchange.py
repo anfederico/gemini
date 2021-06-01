@@ -1,5 +1,4 @@
 from context import gemini
-from gemini  import exchange
 
 import unittest
 

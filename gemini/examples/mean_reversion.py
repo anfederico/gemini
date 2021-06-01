@@ -1,12 +1,8 @@
-from context import gemini
-from gemini  import engine, helpers
-
-import unittest
+# Load gemini
+from gemini.gemini_core import engine, helpers
 
 # Global Imports
-import os
 import pandas as pd
-import numpy as np
 
 # Build mean reversion strategy
 from talib.abstract import *
@@ -64,21 +60,12 @@ def logic(account, lookback):
         print(e)
         pass # Handles lookback errors in beginning of dataset
 
-class Methods(unittest.TestCase):
+# Apply strategy to example
+df = pd.read_csv("data/BTC_USD.csv", header=0, index_col=0)
+df = bands(df)
+df = touches(df)
 
-    def test_engine(self):
-
-        path = os.path.dirname( __file__ ).rstrip("/tests")
-        data_path = os.path.join(path, 'examples/data/BTC_USD.csv')
-
-        df = pd.read_csv(data_path, header=0, index_col=0)
-        df = bands(df)
-        df = touches(df)
-
-        backtest = engine.backtest(df)
-        results = backtest.start(1000, logic)
-
-        self.assertEqual(results.tail(1).values.tolist()[0], [9659.09950232, 6865.28571855189, -0.025089364796339712, 0.0])
-
-if __name__ == '__main__':
-    unittest.main()
+# Backtest
+backtest = engine.backtest(df)
+backtest.start(1000, logic)
+backtest.results()
