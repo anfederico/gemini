@@ -3,9 +3,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/python-v3.6-blue.svg)
-[![Build Status](https://travis-ci.org/anfederico/gemeni.svg?branch=master)](https://travis-ci.org/anfederico/gemeni)
+[![Build Status](https://travis-ci.org/anfederico/gemini.svg?branch=master)](https://travis-ci.org/anfederico/gemini)
 ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
-[![GitHub Issues](https://img.shields.io/github/issues/anfederico/gemeni.svg)](https://github.com/anfederico/gemeni/issues)
+[![GitHub Issues](https://img.shields.io/github/issues/anfederico/gemini.svg)](https://github.com/anfederico/gemini/issues)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 <br>
@@ -16,14 +16,14 @@
 ```bash
 pip3 install git+git://github.com/anfederico/gemini.git
 ```
-
+https://github.com/anfederico/gemini/issues
 ## Load
 ```python
 from gemini_core import data, engine, helpers
 ```
 
 ## Examples
-- [Basic mean reversion strategy](https://github.com/anfederico/gemeni/blob/master/examples/mean_reversion.ipynb)
+- [Basic mean reversion strategy](https://github.com/anfederico/gemini/blob/master/examples/mean_reversion.ipynb)
 - [Automated cryptocurrency trading bot deployed into AWS with Terraform](https://github.com/liamhartley/cryptotradingbot)
 - For more information, please refer to the [full documentation](https://gemini-docs.readthedocs.io/en/latest/)*.
 
