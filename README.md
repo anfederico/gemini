@@ -1,20 +1,20 @@
-<p align="center"><img src="https://github.com/anfederico/Gemini/blob/master/media/logo.png" width="150px"><p>
+<p align="center"><img src="https://raw.githubusercontent.com/anfederico/gemini/master/gemini/media/logo.png" width="150px"><p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/python-v3.6-blue.svg)
-[![Build Status](https://travis-ci.org/anfederico/Gemini.svg?branch=master)](https://travis-ci.org/anfederico/Gemini)
+[![Build Status](https://travis-ci.org/anfederico/gemeni.svg?branch=master)](https://travis-ci.org/anfederico/gemeni)
 ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
-[![GitHub Issues](https://img.shields.io/github/issues/anfederico/Gemini.svg)](https://github.com/anfederico/Gemini/issues)
+[![GitHub Issues](https://img.shields.io/github/issues/anfederico/gemeni.svg)](https://github.com/anfederico/gemeni/issues)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 <br>
-<p align="center"><img src="https://github.com/anfederico/Gemini/blob/master/media/schematic.gif" width="550px"><p>
+<p align="center"><img src="https://raw.githubusercontent.com/anfederico/gemini/master/gemini/media/schematic.gif" width="550px"><p>
 
 ## Install
 
 ```bash
-pip3 install git+git://github.com/liamhartley/Gemini.git
+pip3 install git+git://github.com/anfederico/gemini.git
 ```
 
 ## Load
@@ -23,8 +23,8 @@ from gemini_core import data, engine, helpers
 ```
 
 ## Examples
-- [Automated cryptocurrency trading bot deployed into AWS with Terraform and Python.](https://github.com/liamhartley/crypto_trading_bot)
-- [Mean reversion strategy](https://github.com/anfederico/Gemini/blob/master/examples/mean_reversion.ipynb)
+- [Basic mean reversion strategy](https://github.com/anfederico/gemeni/blob/master/examples/mean_reversion.ipynb)
+- [Automated cryptocurrency trading bot deployed into AWS with Terraform](https://github.com/liamhartley/cryptotradingbot)
 - For more information, please refer to the [full documentation](https://gemini-docs.readthedocs.io/en/latest/)*.
 
 #### Input Data (Optional)
@@ -146,11 +146,4 @@ You can visualize the performance of your strategy by comparing the equity curve
 backtest.chart()
 ```
 
-<p align="center"><img src="https://raw.githubusercontent.com/anfederico/Gemini/master/media/example.png"><p>
-
-#### Acknowledgements
-
-- https://github.com/anfederico/Gemini
-- https://github.com/quantroom-pro/cryptocurrency.backtester
-- Any other relevant forked project.
-
+<p align="center"><img src="https://raw.githubusercontent.com/anfederico/gemini/master/gemini/media/example.png"><p>
