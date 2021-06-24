@@ -77,7 +77,7 @@ class LongPosition(Position):
     def __init__(self, number, entry_price, shares, fee, exit_price=0,
                  stop_loss=0):
         super().__init__(number, entry_price, shares, exit_price, stop_loss)
-        self.type_ = 'Long'
+        self.type_ = 'long'
         self.fee = fee
 
     def close(self, percent, current_price):
@@ -101,7 +101,7 @@ class ShortPosition(Position):
     def __init__(self, number, entry_price, shares, fee, exit_price=0,
                  stop_loss=0):
         super().__init__(number, entry_price, shares, exit_price, stop_loss)
-        self.type_ = 'Short'
+        self.type_ = 'short'
         self.fee = fee
 
     def close(self, percent, current_price):
@@ -152,7 +152,6 @@ class Account:
         :param stop_loss:
         :return:
         """
-
         if entry_capital < 0:
             raise ValueError("Error: Entry capital must be positive")
         elif entry_price < 0:
@@ -172,12 +171,12 @@ class Account:
             # calc buying power
             self.buying_power -= pos_amount + trade_fee
 
-            if type_ == 'Long':
+            if type_ == 'long':
                 position = LongPosition(
                     self.number, entry_price, size, trade_fee, exit_price,
                     stop_loss)
 
-            elif type_ == 'Short':
+            elif type_ == 'short':
                 position = ShortPosition(
                     self.number, entry_price, size, trade_fee, exit_price,
                     stop_loss)
@@ -242,9 +241,9 @@ class Account:
 
         # change price with fee
         fee = self.fee.get(type_, 0)
-        if type_ == 'Long':
+        if type_ == 'long':
             price *= 1 + sign * fee
-        elif type_ == 'Short':
+        elif type_ == 'short':
             price *= 1 - sign * fee
 
         # round price
@@ -280,8 +279,8 @@ class Account:
         # for ot in self.opened_trades: print(ot)  # open trades
         in_pos = sum(
             [p.shares * current_price for p in self.positions
-             if p.type_ == 'Long']) + sum(
+             if p.type_ == 'long']) + sum(
             [p.shares * (p.entry_price - current_price + p.entry_price)
              for p in self.positions
-             if p.type_ == 'Short'])
+             if p.type_ == 'short'])
         return self.buying_power + in_pos
