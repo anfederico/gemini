@@ -40,7 +40,7 @@ class backtest():
         :rtype: backtest
         """
         self.tracker = []
-        self.account = exchange.account(initial_capital)
+        self.account = exchange.Account(initial_capital)
 
         # Enter backtest ---------------------------------------------  
         for index, today in self.data.iterrows():
@@ -50,11 +50,11 @@ class backtest():
 
             # Handle stop loss
             for p in self.account.positions:
-                if p.type == "long":
-                    if p.stop_hit(today['low']):
+                if p.type_ == "long":
+                    if p.stop_loss >= (today['low']):
                         self.account.close_position(p, 1.0, today['low'])
-                if p.type == "short":
-                    if p.stop_hit(today['high']):
+                if p.type_ == "short":
+                    if p.stop_loss <= today['high']:
                         self.account.close_position(p, 1.0, today['high'])
 
             self.account.purge_positions()
@@ -98,10 +98,10 @@ class backtest():
         print("Strategy     : {0}%".format(round(pc*100, 2)))
         print("Net Profit   : {0}".format(round(helpers.profit(self.account.initial_capital, pc), 2)))
 
-        longs  = len([t for t in self.account.opened_trades if t.type == 'long'])
-        sells  = len([t for t in self.account.closed_trades if t.type == 'long'])
-        shorts = len([t for t in self.account.opened_trades if t.type == 'short'])
-        covers = len([t for t in self.account.closed_trades if t.type == 'short'])
+        longs  = len([t for t in self.account.opened_trades if t.type_ == 'long'])
+        sells  = len([t for t in self.account.closed_trades if t.type_ == 'long'])
+        shorts = len([t for t in self.account.opened_trades if t.type_ == 'short'])
+        covers = len([t for t in self.account.closed_trades if t.type_ == 'short'])
 
         print("Longs        : {0}".format(longs))
         print("Sells        : {0}".format(sells))
@@ -135,8 +135,8 @@ class backtest():
                 try:
                     x = time.mktime(trade.date.timetuple())*1000
                     y = self.account.equity[np.where(self.data['date'] == trade.date.strftime("%Y-%m-%d"))[0][0]]
-                    if trade.type == 'long': p.circle(x, y, size=6, color='green', alpha=0.5)
-                    elif trade.type == 'short': p.circle(x, y, size=6, color='red', alpha=0.5)
+                    if trade.type_ == 'long': p.circle(x, y, size=6, color='green', alpha=0.5)
+                    elif trade.type_ == 'short': p.circle(x, y, size=6, color='red', alpha=0.5)
                 except:
                     pass
 
@@ -144,8 +144,8 @@ class backtest():
                 try:
                     x = time.mktime(trade.date.timetuple())*1000
                     y = self.account.equity[np.where(self.data['date'] == trade.date.strftime("%Y-%m-%d"))[0][0]]
-                    if trade.type == 'long': p.circle(x, y, size=6, color='blue', alpha=0.5)
-                    elif trade.type == 'short': p.circle(x, y, size=6, color='orange', alpha=0.5)
+                    if trade.type_ == 'long': p.circle(x, y, size=6, color='blue', alpha=0.5)
+                    elif trade.type_ == 'short': p.circle(x, y, size=6, color='orange', alpha=0.5)
                 except:
                     pass
         
