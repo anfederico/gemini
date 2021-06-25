@@ -97,22 +97,24 @@ A real mean reversion strategy example
 
     def logic(account, lookback):
         try:
+            lookback = bands(lookback)
+            lookback = touches(lookback)
             lookback = helpers.period(lookback)
             today = lookback.loc(0)
-            
+
             # Selling
             if today.touch_upper:
                 exit_price = today.upper
-                for position in account.positions:  
-                    if position.type == 'long':
+                for position in account.positions:
+                    if position.type_ == 'long':
                         account.close_position(position, 1, exit_price)
 
             if today.crossing_up:
                 exit_price = today.close
-                for position in account.positions:  
-                    if position.type == 'long':
+                for position in account.positions:
+                    if position.type_ == 'long':
                         account.close_position(position, 1, exit_price)
-                        
+
             # Buying
             if today.touch_lower | today.crossing_dn:
                 risk          = 1
@@ -120,14 +122,14 @@ A real mean reversion strategy example
                 entry_capital = account.buying_power*risk
                 if entry_capital > 0:
                     account.enter_position('long', entry_capital, entry_price)
-         
+
             if today.crossing_dn:
                 risk          = 1
                 entry_price   = today.close
                 entry_capital = account.buying_power*risk
                 if entry_capital > 0:
-                    account.enter_position('long', entry_capital, entry_price)    
-        
+                    account.enter_position('long', entry_capital, entry_price)
+
         except Exception as e:
             print(e)
         pass # Handles lookback errors in beginning of dataset
