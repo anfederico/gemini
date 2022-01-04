@@ -378,7 +378,7 @@ def max_drawdown(returns, out=None):
     cumulative = np.empty(
         (returns.shape[0] + 1,) + returns.shape[1:],
         dtype='float64',
-    )
+        )
     cumulative[0] = start = 100
     cum_returns(returns_array, starting_value=start, out=cumulative[1:])
 
@@ -627,7 +627,7 @@ def omega_ratio(returns, risk_free=0.0, required_return=0.0,
         return np.nan
     else:
         return_threshold = (1 + required_return) ** \
-            (1. / annualization) - 1
+                           (1. / annualization) - 1
 
     returns_less_thresh = returns - risk_free - return_threshold
 
@@ -697,15 +697,19 @@ def sharpe_ratio(returns,
     returns_risk_adj = np.asanyarray(_adjust_returns(returns, risk_free))
     ann_factor = annualization_factor(period, annualization)
 
-    np.multiply(
-        np.divide(
-            nanmean(returns_risk_adj, axis=0),
-            nanstd(returns_risk_adj, ddof=1, axis=0),
+    # handle 0.
+    if nanstd(returns_risk_adj, ddof=1, axis=0) == 0.0:
+        out = np.zeros_like(out)
+    else:
+        np.multiply(
+            np.divide(
+                nanmean(returns_risk_adj, axis=0),
+                nanstd(returns_risk_adj, ddof=1, axis=0),
+                out=out,
+            ),
+            np.sqrt(ann_factor),
             out=out,
-        ),
-        np.sqrt(ann_factor),
-        out=out,
-    )
+        )
     if return_1d:
         out = out.item()
 
@@ -787,7 +791,10 @@ def sortino_ratio(returns,
         if _downside_risk is not None else
         downside_risk(returns, required_return, period, annualization)
     )
-    np.divide(average_annual_return, annualized_downside_risk, out=out)
+    if annualized_downside_risk == 0.0:
+        out = np.zeros_like(out)
+    else:
+        np.divide(average_annual_return, annualized_downside_risk, out=out)
     if return_1d:
         out = out.item()
     elif isinstance(returns, pd.DataFrame):
@@ -1508,7 +1515,7 @@ def tail_ratio(returns):
         return np.nan
 
     return np.abs(np.percentile(returns, 95)) / \
-        np.abs(np.percentile(returns, 5))
+           np.abs(np.percentile(returns, 5))
 
 
 def capture(returns, factor_returns, period=DAILY):
