@@ -41,7 +41,7 @@ def analyze_bokeh(algo, title=None, show_trades=False):
                 continue
 
             p.line(records['date'], records[c], color='grey',
-                   legend=c, y_range_name="Records")
+                   legend_label=c, y_range_name="Records")
 
     # print(algo.data[['date', 'close', 'sma50', 'sma150']])
 
@@ -54,12 +54,12 @@ def analyze_bokeh(algo, title=None, show_trades=False):
 
     p.line(algo.data.index, algo.data['base_equity'],
            color='#CAD8DE',
-           legend='Buy and Hold')
-           # ,y_range_name="equity_y_axis")
+           legend_label='Buy and Hold')
+    # ,y_range_name="equity_y_axis")
     p.line(algo.data.index, algo.data['equity'],
            color='#49516F',
-           legend='Strategy')
-           #,y_range_name="equity_y_axis")
+           legend_label='Strategy')
+    #,y_range_name="equity_y_axis")
 
     cmo_above_50 = bokeh.models.Span(location=50,
                                      dimension="width",
