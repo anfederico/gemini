@@ -14,12 +14,12 @@
 ## Install
 
 ```bash
-pip3 install git+git://github.com/anfederico/gemini.git
+pip3 install git+https://github.com/anfederico/gemini.git
 ```
 https://github.com/anfederico/gemini/issues
 ## Load
 ```python
-from gemini_core import data, engine, helpers
+from gemini.gemini_core import data, engine, helpers
 ```
 
 ## Examples
@@ -101,7 +101,7 @@ def logic(account, lookback):
         if today['signal'] == "down":
             if yesterday['signal'] == "down":
                 exit_price = today['close']
-                for position in acount.positions:  
+                for position in account.positions:  
                     if position.type == 'long':
                         account.close_position(position, 0.5, exit_price)
 
